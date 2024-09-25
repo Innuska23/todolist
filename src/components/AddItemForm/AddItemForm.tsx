@@ -1,6 +1,7 @@
 import { ChangeEventHandler, KeyboardEvent, useState } from "react"
 
-import { Button } from "../Button/Button"
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import { Box, IconButton, TextField } from "@mui/material";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
@@ -44,26 +45,23 @@ export const AddItemForm = ({ addItem }: AddItemFormPropsType) => {
     }
     return (
         <>
-            <div>
-                <input
+            <Box>
+
+                <TextField
+                    size='small'
                     value={inputValue}
+                    placeholder="Add title"
                     onChange={changeItemTitleHandler}
                     onKeyUp={addItemOnKeyUpHandler}
-                    className={inputError ? "error" : ''} />
-                < Button
-                    title={'+'}
+                    error={!!inputError}
+                    helperText={inputError} />
+                <IconButton
                     onClick={handleAddItem}
-                    disabled={!!validateInput(inputValue)
-                    }
+                    disabled={!!validateInput(inputValue)}>
+                    <AddCircleOutlineRoundedIcon />
+                </IconButton>
 
-                />
-            </div>
-
-            {
-                inputError && (
-                    <div style={{ color: 'red', marginTop: '8px' }}>{inputError}</div>
-                )
-            }
+            </Box>
         </>
     )
 }
