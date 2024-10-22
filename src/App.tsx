@@ -59,11 +59,11 @@ function App() {
     const [themeMode, setThemeMode] = useState<ThemeMode>('light')
 
     const removeTask = (taskId: string, todolistId: string) => {
-        dispatchTasks(removeTaskAC(taskId, todolistId))
+        dispatchTasks(removeTaskAC({ taskId, todolistId }))
     }
 
     const addTask = (title: string, todolistId: string) => {
-        dispatchTasks(addTaskAC(title, todolistId))
+        dispatchTasks(addTaskAC({ title, todolistId }))
     }
 
     const changeFilter = (filter: FilterValuesType, todolistId: string) => {
@@ -71,7 +71,7 @@ function App() {
     }
 
     const changeStatusTask = (taskId: string, status: boolean, todolistId: string) => {
-        dispatchTasks(changeTaskAC(taskId, status, todolistId))
+        dispatchTasks(changeTaskAC({ taskId, status, todolistId }))
     }
 
     const removeTodolist = (todolistId: string) => {
@@ -79,13 +79,13 @@ function App() {
     }
 
     const addNewTodoList = (todolistValue: string) => {
-        const newTodoId = v1();
-        dispatchTodolist(addNewTodoListAC(todolistValue, newTodoId))
-        dispatchTasks(addNewTodoListTaskAC(newTodoId))
+        const action = addNewTodoListAC(todolistValue)
+        dispatchTodolist(action);
+        dispatchTasks(action);
     }
 
     const updateTask = (todolistId: string, taskId: string, title: string) => {
-        dispatchTasks(updateTaskAC(todolistId, taskId, title))
+        dispatchTasks(updateTaskAC({ todolistId, taskId, title }))
     };
 
     const updateTodolist = (todolistId: string, title: string) => {

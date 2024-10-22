@@ -67,7 +67,7 @@ export const todoListReducer = (state: TodolistType[] = initialState, action: Ac
             return state.map(filter => filter.id === action.payload.id ? { ...filter, filter: action.payload.filter } : filter)
         }
         default:
-            throw new Error("I don't understand this type")
+            return state;
     }
 }
 
@@ -84,13 +84,13 @@ export const removeTodoAC = (id: string) => {
 
 export type addNewTodoListACType = ReturnType<typeof addNewTodoListAC>
 
-export const addNewTodoListAC = (title: string, id: string) => {
+export const addNewTodoListAC = (title: string) => {
     return {
         type: 'ADD_TODOLIST',
         payload: {
             title,
-            id
-        },
+            id: v1()
+        }
     } as const
 }
 
