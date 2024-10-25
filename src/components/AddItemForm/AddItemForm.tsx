@@ -43,6 +43,7 @@ export const AddItemForm = ({ addItem }: AddItemFormPropsType) => {
         if (value.trim().length > maxNumber) return `Title should not exceed ${maxNumber} characters`;
         return '';
     }
+
     return (
         <>
             <Box>

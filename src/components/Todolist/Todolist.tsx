@@ -1,5 +1,4 @@
 import { ChangeEvent } from "react";
-import { FilterValuesType } from "../../App";
 import '../../App.css'
 import { AddItemForm } from "../AddItemForm/AddItemForm";
 import { EditableSpan } from "../EditableSpan/EditableSpan";
@@ -9,6 +8,7 @@ import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import { filterButtonsContainerSx, formAddedContainerSx, listItemSx } from "./Todolist.styles";
+import { FilterValuesType } from "../../App";
 
 
 type TodoListPropsType = {

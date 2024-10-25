@@ -1,6 +1,6 @@
+import { TodolistType } from '../App'
 import { addNewTodoListAC, changeFilterAC, removeTodoAC, todoListReducer, updateTodolistAC } from './todolists-reducer'
 import { v1 } from 'uuid'
-import { TodolistType } from '../App'
 
 let todolistId1: string
 let todolistId2: string
