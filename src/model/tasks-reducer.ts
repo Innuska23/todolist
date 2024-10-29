@@ -136,11 +136,9 @@ export const updateTaskAC = (payload: { todolistId: string, taskId: string, titl
     } as const
 }
 
-export const addNewTodoListTaskAC = (id: string) => {
+export const addNewTodoListTaskAC = (payload: { id: string }) => {
     return {
         type: 'ADD_TODOLIST_NEW',
-        payload: {
-            id
-        }
+        payload
     } as const
 }

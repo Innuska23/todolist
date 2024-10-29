@@ -1,5 +1,4 @@
-import { useReducer, useState } from 'react';
-import { v1 } from 'uuid';
+import { useState } from 'react';
 
 import { AddItemForm } from './components/AddItemForm/AddItemForm';
 import { TodoList } from './components/TodoList/TodoList';
@@ -20,10 +19,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
-import { addNewTodoListAC, changeFilterAC, removeTodoAC, todoListReducer, updateTodolistAC } from './model/todolists-reducer';
-import { addTaskAC, changeTaskAC, removeTaskAC, tasksReducer, TasksStateType, updateTaskAC } from './model/tasks-reducer';
+import { addNewTodoListAC, changeFilterAC, removeTodoAC, updateTodolistAC } from './model/todolists-reducer';
+import { addTaskAC, changeTaskAC, removeTaskAC, TasksStateType, updateTaskAC } from './model/tasks-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './components/app/store';
+import { changeThemeAC } from './components/app/app-reducer';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 
@@ -42,7 +42,9 @@ function App() {
 
     const dispatch = useDispatch()
 
-    const [themeMode, setThemeMode] = useState<ThemeMode>('light')
+    const themeMode = useSelector<RootState, ThemeMode>(state => state.themeMode.themeMode)
+
+    // const [themeMode, setThemeMode] = useState<ThemeMode>('light')
 
     const removeTask = (taskId: string, todolistId: string) => {
         dispatch(removeTaskAC({ taskId, todolistId }))
@@ -52,8 +54,8 @@ function App() {
         dispatch(addTaskAC({ title, todolistId }))
     }
 
-    const changeFilter = (filter: FilterValuesType, todolistId: string) => {
-        dispatch(changeFilterAC(todolistId, filter))
+    const changeFilter = (filter: FilterValuesType, id: string) => {
+        dispatch(changeFilterAC({ id, filter }))
     }
 
     const changeStatusTask = (taskId: string, status: boolean, todolistId: string) => {
@@ -73,8 +75,8 @@ function App() {
         dispatch(updateTaskAC({ todolistId, taskId, title }))
     };
 
-    const updateTodolist = (todolistId: string, title: string) => {
-        dispatch(updateTodolistAC(todolistId, title))
+    const updateTodolist = (id: string, title: string) => {
+        dispatch(updateTodolistAC({ id, title }))
     }
 
 
@@ -88,7 +90,7 @@ function App() {
     })
 
     const changeModeHandler = () => {
-        setThemeMode(themeMode === 'light' ? 'dark' : 'light')
+        dispatch(changeThemeAC(themeMode === 'light' ? 'dark' : 'light'))
     }
 
 
