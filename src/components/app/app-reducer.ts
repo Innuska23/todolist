@@ -12,7 +12,10 @@ export const appReducer = (
 ): InitialState => {
     switch (action.type) {
         case 'CHANGE_THEME':
-            return { ...state, themeMode: action.payload.themeMode }
+            return {
+                ...state,
+                themeMode: action.payload.themeMode
+            }
         default:
             return state
     }

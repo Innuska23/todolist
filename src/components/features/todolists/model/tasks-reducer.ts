@@ -1,7 +1,7 @@
 import { v1 } from 'uuid'
 
-import { TaskType } from '../components/TodoList/TodoList'
 import { AddTodolistActionType, RemoveTodolistActionType } from './todolists-reducer'
+import { TaskType } from '../ui/Todolists/TodoList/TodoList'
 
 export type RemoveTaskActionType = {
     type: 'REMOVE_TASK'
