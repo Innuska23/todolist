@@ -1,14 +1,14 @@
-import { combineReducers, legacy_createStore } from 'redux'
+import { combineReducers, legacy_createStore } from "redux"
 
-import { appReducer } from './app-reducer'
-import { tasksReducer } from '../features/todolists/model/tasks-reducer'
-import { todoListReducer } from '../features/todolists/model/todolists-reducer'
+import { appReducer } from "./app-reducer"
+import { tasksReducer } from "../features/todolists/model/tasks-reducer"
+import { todoListReducer } from "../features/todolists/model/todolists-reducer"
 
 const rootReducer = combineReducers({
-    tasks: tasksReducer,
-    todolists: todoListReducer,
+  tasks: tasksReducer,
+  todolists: todoListReducer,
 
-    app: appReducer
+  app: appReducer,
 })
 
 export const store = legacy_createStore(rootReducer)

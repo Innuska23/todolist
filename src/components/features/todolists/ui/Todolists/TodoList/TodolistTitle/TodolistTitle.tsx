@@ -1,39 +1,37 @@
 import { Box, IconButton } from "@mui/material"
-import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded"
 
-import { TodolistType } from "../../../../../../app/App"
-import { EditableSpan } from "../../../../../../common/components/EditableSpan/EditableSpan"
-import { removeTodoAC, updateTodolistAC } from "../../../../model/todolists-reducer";
-import { todolistContainer } from "./TodolistTitle.styles";
+import { removeTodoAC, updateTodolistAC } from "../../../../model/todolists-reducer"
+import { todolistContainer } from "./TodolistTitle.styles"
 
-import { useAppDispatch } from "../../../../../../common/hooks/useAppDispatch";
+import { EditableSpan } from "components/common/components"
+import { useAppDispatch } from "components/common/hooks"
+import { TodolistType } from "components/app/App"
 
 type TodolistTitleProps = {
-    todolist: TodolistType
+  todolist: TodolistType
 }
 
 export const TodolistTitle = ({ todolist }: TodolistTitleProps) => {
-    const { title, id } = todolist
+  const { title, id } = todolist
 
-    const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch()
 
-    const removeTodolistHandler = () => {
-        dispatch(removeTodoAC(id))
-    }
-    const updateTodolistHandler = (title: string) => {
-        dispatch(updateTodolistAC({ id, title }))
-    }
+  const removeTodolistHandler = () => {
+    dispatch(removeTodoAC(id))
+  }
+  const updateTodolistHandler = (title: string) => {
+    dispatch(updateTodolistAC({ id, title }))
+  }
 
-    return (
-        <Box className={'todolist-title-container'} sx={todolistContainer}>
-            <h3>
-                <EditableSpan value={title} onChange={updateTodolistHandler} />
-            </h3>
-            <IconButton
-                size="small"
-                onClick={removeTodolistHandler}>
-                <DeleteOutlineRoundedIcon />
-            </IconButton>
-        </Box>
-    )
+  return (
+    <Box className={"todolist-title-container"} sx={todolistContainer}>
+      <h3>
+        <EditableSpan value={title} onChange={updateTodolistHandler} />
+      </h3>
+      <IconButton size="small" onClick={removeTodolistHandler}>
+        <DeleteOutlineRoundedIcon />
+      </IconButton>
+    </Box>
+  )
 }
