@@ -1,40 +1,55 @@
+import { TodolistType } from "../../../../../../app/App"
 import { List } from "@mui/material"
 import { Task } from "./Task/Task"
-
-import { useAppSelector } from "components/common/hooks"
-import { selectTask } from "components/features/todolists/model/tasksSelectors"
-import { TodolistType } from "components/app/App"
+import { useAppSelector } from "../../../../../../common/hooks/useAppSelector"
+import { selectTask } from "../../../../model/tasksSelectors"
+import { useEffect } from "react"
+import { fetchTasksTC } from "components/features/todolists/model/tasks-reducer"
+import { useAppDispatch } from "components/common/hooks"
+import { TaskStatus } from "components/common/enums"
 
 type TasksType = {
-  todolist: TodolistType
+    todolist: TodolistType
 }
 
 export const Tasks = ({ todolist }: TasksType) => {
-  const tasks = useAppSelector(selectTask)
 
-  const allTodolistTasks = tasks[todolist.id]
+    const dispatch = useAppDispatch()
 
-  let tasksForTodolist = allTodolistTasks
+    useEffect(() => {
+        dispatch(fetchTasksTC(todolist.id))
+    }, [dispatch, todolist.id])
 
-  if (todolist.filter === "active") {
-    tasksForTodolist = allTodolistTasks.filter((task) => !task.isDone)
-  }
+    const tasks = useAppSelector(selectTask)
 
-  if (todolist.filter === "completed") {
-    tasksForTodolist = allTodolistTasks.filter((task) => task.isDone)
-  }
+    const allTodolistTasks = tasks[todolist.id]
 
-  return (
-    <>
-      {tasksForTodolist.length === 0 ? (
-        <p>Тасок нет</p>
-      ) : (
-        <List>
-          {tasksForTodolist.map((task) => {
-            return <Task key={task.id} task={task} todolist={todolist} />
-          })}
-        </List>
-      )}
-    </>
-  )
+    let tasksForTodolist = allTodolistTasks
+
+    if (todolist.filter === 'active') {
+        tasksForTodolist = allTodolistTasks.filter(task => task.status === TaskStatus.New)
+    }
+
+    if (todolist.filter === 'completed') {
+        tasksForTodolist = allTodolistTasks.filter(task => task.status === TaskStatus.Completed)
+    }
+
+    return (
+        <>
+            {tasksForTodolist?.length === 0 ? (
+                <p>Тасок нет</p>
+            ) : (
+                <List>
+                    {tasksForTodolist?.map(task => {
+                        return (
+                            <Task
+                                key={task.id}
+                                task={task}
+                                todolist={todolist} />
+                        )
+                    })}
+                </List>
+            )}
+        </>
+    )
 }

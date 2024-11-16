@@ -1,32 +1,27 @@
 import { instance } from "../../../common/instance/instance"
 
-import { GetTaskResponse, Task, UpdateTaskModel } from "./tasksApi.types"
+import { GetTaskResponse, DomainTask, UpdateTaskModel } from "./tasksApi.types"
 
-import { TaskStatus } from "../../../common/enums"
 import { Response } from "components/common/types"
 
 export const tasksApi = {
   getTasks(todolistId: string) {
     return instance.get<GetTaskResponse>(`todo-lists/${todolistId}/tasks`)
   },
-  createTask(title: string, todolistId: string) {
-    return instance.post<Response<{ item: Task }>>(`todo-lists/${todolistId}/tasks`, { title })
+  createTask(payload: { title: string, todolistId: string }) {
+    const { title, todolistId } = payload
+    return instance.post<Response<{ item: DomainTask }>>(`todo-lists/${todolistId}/tasks`, { title })
   },
-  removeTask(taskId: string, todolistId: string) {
-    return instance.delete<Response<{ item: Task }>>(`todo-lists/${todolistId}/tasks/${taskId}`)
+  removeTask(payload: { taskId: string, todolistId: string }) {
+    const { taskId, todolistId } = payload
+    return instance.delete<Response<{ item: DomainTask }>>(`todo-lists/${todolistId}/tasks/${taskId}`)
   },
-  changeTaskStatus(checked: boolean, task: Task, todolistId: string) {
-    const model: UpdateTaskModel = {
-      description: task.description,
-      title: task.title,
-      status: checked ? TaskStatus.Completed : TaskStatus.New,
-      priority: task.priority,
-      startDate: task.startDate,
-      deadline: task.deadline,
-    }
-    return instance.put<Response<{ item: Task }>>(`todo-lists/${todolistId}/tasks/${task.id}`, model)
+
+  changeTaskStatus(payload: { model: UpdateTaskModel, taskId: string, todolistId: string }) {
+    const { model, taskId, todolistId } = payload
+    return instance.put<Response<{ item: DomainTask }>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
   },
-  changeTaskTitle(title: string, task: Task, todolistId: string) {
-    return instance.put<Response<{ item: Task }>>(`todo-lists/${todolistId}/tasks/${task.id}`, { title })
+  changeTaskTitle(title: string, task: DomainTask, todolistId: string) {
+    return instance.put<Response<{ item: DomainTask }>>(`todo-lists/${todolistId}/tasks/${task.id}`, { title })
   },
 }

@@ -1,35 +1,44 @@
-import { Grid, Paper } from "@mui/material"
+import { Grid, Paper } from "@mui/material";
 
-import { TodoList } from "./TodoList/TodoList"
-import { useAppSelector } from "components/common/hooks"
-import { selectTodolists } from "../../model/todolistsSelectors"
-import { selectTask } from "../../model/tasksSelectors"
+import { TodoList } from "./TodoList/TodoList";
+
+import { useAppSelector } from "../../../../common/hooks/useAppSelector";
+import { selectTodolists } from "../../model/todolistsSelectors";
+import { useEffect } from "react";
+import { useAppDispatch } from "components/common/hooks";
+import { fetchTodolistsTC } from "../../model/todolists-reducer";
 
 export const Todolists = () => {
+
   const todolists = useAppSelector(selectTodolists)
-  const tasks = useAppSelector(selectTask)
+
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(fetchTodolistsTC())
+  }, [dispatch])
 
   return (
     <>
-      {todolists.map((tl) => {
-        let tasksForTodoList = tasks[tl.id]
+      {
+        todolists.map((tl) => {
 
-        if (tl.filter === "active") {
-          tasksForTodoList = tasks[tl.id].filter((t) => !t.isDone)
-        }
+          return (
+            <Grid key={tl.id}>
+              <Paper
+                elevation={3}
+                sx={{ p: 2 }}>
 
-        if (tl.filter === "completed") {
-          tasksForTodoList = tasks[tl.id].filter((t) => t.isDone)
-        }
+                <TodoList
+                  todolist={tl}
+                />
 
-        return (
-          <Grid key={tl.id}>
-            <Paper elevation={3} sx={{ p: 2 }}>
-              <TodoList todolist={tl} />
-            </Paper>
-          </Grid>
-        )
-      })}
+              </Paper>
+            </Grid>
+          );
+        })
+      }
     </>
   )
+
 }

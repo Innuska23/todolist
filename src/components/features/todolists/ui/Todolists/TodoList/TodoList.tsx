@@ -1,36 +1,33 @@
-import { Box } from "@mui/material"
+import { AddItemForm } from "../../../../../common/components/AddItemForm/AddItemForm";
 
-import { TodolistType } from "../../../../../app/App"
-import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons"
-import { Tasks } from "./Tasks/Tasks"
-import { TodolistTitle } from "./TodolistTitle/TodolistTitle"
-import { addTaskAC } from "../../../model/tasks-reducer"
-import { AddItemForm } from "components/common/components"
-import { useAppDispatch } from "components/common/hooks"
+import { Box } from "@mui/material";
+
+import { TodolistType } from "../../../../../app/App";
+import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons";
+import { Tasks } from "./Tasks/Tasks";
+import { TodolistTitle } from './TodolistTitle/TodolistTitle';
+import { addTaskTC } from "../../../model/tasks-reducer";
+import { useAppDispatch } from "../../../../../common/hooks/useAppDispatch";
 
 type TodoListPropsType = {
-  todolist: TodolistType
+    todolist: TodolistType
 }
 
-export type TaskType = {
-  id: string
-  title: string
-  isDone: boolean
-}
+export const TodoList = ({
+    todolist,
+}: TodoListPropsType) => {
+    const dispatch = useAppDispatch()
 
-export const TodoList = ({ todolist }: TodoListPropsType) => {
-  const dispatch = useAppDispatch()
+    const addTaskHandler = (title: string) => {
+        dispatch(addTaskTC({ title, todolistId: todolist.id }))
+    }
 
-  const addTaskHandler = (title: string) => {
-    dispatch(addTaskAC({ title, todolistId: todolist.id }))
-  }
-
-  return (
-    <Box>
-      <TodolistTitle todolist={todolist} />
-      <AddItemForm addItem={addTaskHandler} />
-      <Tasks todolist={todolist} />
-      <FilterTasksButtons todolist={todolist} />
-    </Box>
-  )
+    return (
+        <Box>
+            <TodolistTitle todolist={todolist} />
+            <AddItemForm addItem={addTaskHandler} />
+            <Tasks todolist={todolist} />
+            <FilterTasksButtons todolist={todolist} />
+        </Box>
+    )
 }
