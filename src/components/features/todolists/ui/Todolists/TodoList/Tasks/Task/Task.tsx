@@ -4,7 +4,7 @@ import { Box, Checkbox, IconButton, ListItem } from "@mui/material"
 import { TodolistType } from "../../../../../../../app/App"
 import { EditableSpan } from "../../../../../../../common/components/EditableSpan/EditableSpan"
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
-import { changeTaskStatusTC, removeTaskTC, updateTaskAC } from "../../../../../model/tasks-reducer"
+import { changeTaskStatusTC, removeTaskTC, updateTaskTitleTC } from "../../../../../model/tasks-reducer"
 
 import { formAddedContainerSx, taskTextSx } from "./Task.styles"
 import { useAppDispatch } from "../../../../../../../common/hooks/useAppDispatch"
@@ -29,7 +29,7 @@ export const Task = ({ task, todolist }: TaskProps) => {
     }
 
     const changeTaskTitleHandler = (title: string) => {
-        dispatch(updateTaskAC({ taskId: task.id, title, todolistId: todolist.id }))
+        dispatch(updateTaskTitleTC({ taskId: task.id, title, todolistId: todolist.id }))
     }
 
     return (

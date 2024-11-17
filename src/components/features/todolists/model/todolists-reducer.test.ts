@@ -1,4 +1,4 @@
-import { addNewTodoListAC, changeFilterAC, DomainTodolist, removeTodoAC, todoListReducer, updateTodolistAC } from './todolists-reducer'
+import { addTodolistAC, changeFilterAC, DomainTodolist, removeTodoAC, todoListReducer, updateTodolistAC } from './todolists-reducer'
 import { v1 } from 'uuid'
 
 let todolistId1: string
@@ -25,10 +25,17 @@ test('correct todolist should be removed', () => {
 
 test('correct todolist should be added', () => {
 
-    const endState = todoListReducer(startState, addNewTodoListAC('New Todolist'))
+    const endState = todoListReducer(
+        startState,
+        addTodolistAC({
+            id: todolistId2,
+            addedDate: '',
+            order: 1,
+            title: 'New Todolist',
+        }))
 
     expect(endState.length).toBe(3)
-    expect(endState[2].title).toBe('New Todolist')
+    expect(endState[0].title).toBe('New Todolist')
 })
 
 test('correct todolist should change its name', () => {

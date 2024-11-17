@@ -21,7 +21,8 @@ export const tasksApi = {
     const { model, taskId, todolistId } = payload
     return instance.put<Response<{ item: DomainTask }>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
   },
-  changeTaskTitle(title: string, task: DomainTask, todolistId: string) {
+  changeTaskTitle(payload: {title: string, task: DomainTask, todolistId: string}) {
+    const {title, task, todolistId} = payload
     return instance.put<Response<{ item: DomainTask }>>(`todo-lists/${todolistId}/tasks/${task.id}`, { title })
   },
 }

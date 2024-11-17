@@ -1,7 +1,7 @@
 import { DomainTask } from './../api/tasksApi.types';
 import { v1 } from 'uuid'
-import { addTaskAC, changeTaskAC, removeTaskAC, tasksReducer, TasksStateType, updateTaskAC } from './tasks-reducer'
-import { addNewTodoListAC, removeTodoAC } from './todolists-reducer'
+import { addTaskAC, removeTaskAC, tasksReducer, TasksStateType, updateTaskAC } from './tasks-reducer'
+import { addTodolistAC, removeTodoAC } from './todolists-reducer'
 import { TaskPriority, TaskStatus } from 'components/common/enums'
 
 let todolistId1: string
@@ -70,9 +70,9 @@ test('status of specified task should be changed', () => {
 
     const endState = tasksReducer(
         startState,
-        changeTaskAC({
+        updateTaskAC({
             taskId: '2',
-            status: TaskStatus.InProgress,
+            updates: { status: TaskStatus.InProgress },
             todolistId: todolistId2
         })
     )
@@ -89,7 +89,7 @@ test('title of specified task should be changed', () => {
         startState,
         updateTaskAC({
             taskId: '2',
-            title: 'water',
+            updates: { title: 'water' },
             todolistId: todolistId2,
         })
     )
@@ -100,7 +100,14 @@ test('title of specified task should be changed', () => {
 
 test('new array should be added when new todolist is added', () => {
 
-    const endState = tasksReducer(startState, addNewTodoListAC('new todolist'))
+    const action = addTodolistAC({
+        id: 'new-id',
+        title: 'new todolist',
+        addedDate: '',
+        order: 1
+    })
+
+    const endState = tasksReducer(startState, action)
 
     const keys = Object.keys(endState)
     const newKey = keys.find(k => k !== todolistId1 && k !== todolistId2)
@@ -109,7 +116,8 @@ test('new array should be added when new todolist is added', () => {
     }
 
     expect(keys.length).toBe(3)
-    expect(endState[newKey]).toEqual([])
+    expect(endState['new-id']).toBeDefined()
+    expect(endState['new-id']).toEqual([])
 })
 
 test('property with todolistId should be deleted', () => {

@@ -3,7 +3,7 @@ import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 
 import { TodolistType } from "../../../../../../app/App"
 import { EditableSpan } from "../../../../../../common/components/EditableSpan/EditableSpan"
-import { removeTodoAC, updateTodolistAC } from "../../../../model/todolists-reducer";
+import { removeTodolistTC, updateTodolistTitleTC } from "../../../../model/todolists-reducer";
 import { todolistContainer } from "./TodolistTitle.styles";
 
 import { useAppDispatch } from "../../../../../../common/hooks/useAppDispatch";
@@ -18,10 +18,10 @@ export const TodolistTitle = ({ todolist }: TodolistTitleProps) => {
     const dispatch = useAppDispatch()
 
     const removeTodolistHandler = () => {
-        dispatch(removeTodoAC(id))
+        dispatch(removeTodolistTC(id))
     }
     const updateTodolistHandler = (title: string) => {
-        dispatch(updateTodolistAC({ id, title }))
+        dispatch(updateTodolistTitleTC({ id, title }))
     }
 
     return (
