@@ -5,14 +5,16 @@ type EditableSpanPropsType = {
     value: string;
     className?: string;
     onChange: (newTitle: string) => void;
+    disabled: boolean
 };
 
-export const EditableSpan: React.FC<EditableSpanPropsType> = ({ value, className, onChange }) => {
+export const EditableSpan: React.FC<EditableSpanPropsType> = ({ value, className, onChange, disabled }) => {
     const [edit, setEdit] = useState(false);
     const [newTitle, setNewTitle] = useState(value);
     const [error, setError] = useState(false);
 
     const editHandler = () => {
+        if (disabled) return;
         if (edit) {
             if (newTitle.trim() !== "") {
                 onChange(newTitle);
@@ -41,10 +43,11 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = ({ value, className
             error={error}
             helperText={error ? "Title is required" : ""}
             sx={{ mb: 1 }}
+            disabled={disabled}
         />
     ) : (
-        <span className={className} onDoubleClick={editHandler}>
+        <span className={className} onDoubleClick={!disabled ? editHandler : undefined}>
             {value}
-        </span>
+        </span >
     );
 };

@@ -1,5 +1,4 @@
-import { TodolistType } from "../../../../../../app/App"
-import { List } from "@mui/material"
+import { Box, List, Typography } from "@mui/material"
 import { Task } from "./Task/Task"
 import { useAppSelector } from "../../../../../../common/hooks/useAppSelector"
 import { selectTask } from "../../../../model/tasksSelectors"
@@ -7,9 +6,10 @@ import { useEffect } from "react"
 import { fetchTasksTC } from "components/features/todolists/model/tasks-reducer"
 import { useAppDispatch } from "components/common/hooks"
 import { TaskStatus } from "components/common/enums"
+import { DomainTodolist } from "components/features/todolists/model/todolists-reducer"
 
 type TasksType = {
-    todolist: TodolistType
+    todolist: DomainTodolist
 }
 
 export const Tasks = ({ todolist }: TasksType) => {
@@ -37,7 +37,14 @@ export const Tasks = ({ todolist }: TasksType) => {
     return (
         <>
             {tasksForTodolist?.length === 0 ? (
-                <p>Тасок нет</p>
+                <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    marginTop={2}
+                >
+                    <Typography variant="h6">Тасок нет</Typography>
+                </Box>
             ) : (
                 <List>
                     {tasksForTodolist?.map(task => {
@@ -45,7 +52,8 @@ export const Tasks = ({ todolist }: TasksType) => {
                             <Task
                                 key={task.id}
                                 task={task}
-                                todolist={todolist} />
+                                todolist={todolist}
+                            />
                         )
                     })}
                 </List>

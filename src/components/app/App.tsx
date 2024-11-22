@@ -7,6 +7,8 @@ import { Main } from './Main';
 import './App.css';
 import { useAppSelector } from '../common/hooks/useAppSelector';
 import { selectThemeMode } from './appSelectors';
+import { ErrorSnackbar } from '../common/components/ErrorSnackbar/ErrorSnackbar';
+import { RequestStatus } from './app-reducer';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 
@@ -14,6 +16,7 @@ export type TodolistType = {
     id: string,
     title: string
     filter: FilterValuesType
+    entityStatus: RequestStatus
 }
 
 function App() {
@@ -25,6 +28,7 @@ function App() {
             <CssBaseline />
             <Header />
             <Main />
+            <ErrorSnackbar />
         </ThemeProvider>
     );
 };

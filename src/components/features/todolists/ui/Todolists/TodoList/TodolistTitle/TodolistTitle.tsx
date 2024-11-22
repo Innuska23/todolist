@@ -1,19 +1,18 @@
 import { Box, IconButton } from "@mui/material"
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 
-import { TodolistType } from "../../../../../../app/App"
 import { EditableSpan } from "../../../../../../common/components/EditableSpan/EditableSpan"
-import { removeTodolistTC, updateTodolistTitleTC } from "../../../../model/todolists-reducer";
+import { DomainTodolist, removeTodolistTC, updateTodolistTitleTC } from "../../../../model/todolists-reducer";
 import { todolistContainer } from "./TodolistTitle.styles";
 
 import { useAppDispatch } from "../../../../../../common/hooks/useAppDispatch";
 
 type TodolistTitleProps = {
-    todolist: TodolistType
+    todolist: DomainTodolist
 }
 
 export const TodolistTitle = ({ todolist }: TodolistTitleProps) => {
-    const { title, id } = todolist
+    const { title, id, entityStatus } = todolist
 
     const dispatch = useAppDispatch()
 
@@ -27,11 +26,15 @@ export const TodolistTitle = ({ todolist }: TodolistTitleProps) => {
     return (
         <Box className={'todolist-title-container'} sx={todolistContainer}>
             <h3>
-                <EditableSpan value={title} onChange={updateTodolistHandler} />
+                <EditableSpan
+                    value={title}
+                    onChange={updateTodolistHandler}
+                    disabled={entityStatus === 'loading'} />
             </h3>
             <IconButton
                 size="small"
-                onClick={removeTodolistHandler}>
+                onClick={removeTodolistHandler}
+                disabled={entityStatus === 'loading'}>
                 <DeleteOutlineRoundedIcon />
             </IconButton>
         </Box>

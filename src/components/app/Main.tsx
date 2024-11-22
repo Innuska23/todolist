@@ -18,7 +18,7 @@ export const Main = () => {
     return (
         <Container fixed>
             <Grid container sx={{ mb: '20px' }}>
-                <AddItemForm addItem={addNewTodoList} />
+                <AddItemForm addItem={addNewTodoList}/>
             </Grid>
 
             <Grid container spacing={4}>

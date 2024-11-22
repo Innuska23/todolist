@@ -5,11 +5,12 @@ import { Box, IconButton, TextField } from "@mui/material";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
+    disabled?: boolean
 }
 
-export const AddItemForm = ({ addItem }: AddItemFormPropsType) => {
+export const AddItemForm = ({ addItem, disabled }: AddItemFormPropsType) => {
 
-    const maxNumber = 10;
+    const maxNumber = 100;
 
     const [inputValue, setInputValue] = useState('');
     const [inputError, setInputError] = useState('');
@@ -55,10 +56,11 @@ export const AddItemForm = ({ addItem }: AddItemFormPropsType) => {
                     onChange={changeItemTitleHandler}
                     onKeyUp={addItemOnKeyUpHandler}
                     error={!!inputError}
-                    helperText={inputError} />
+                    helperText={inputError}
+                    disabled={disabled} />
                 <IconButton
                     onClick={handleAddItem}
-                    disabled={!!validateInput(inputValue)}>
+                    disabled={!!validateInput(inputValue) && disabled}>
                     <AddCircleOutlineRoundedIcon />
                 </IconButton>
 
