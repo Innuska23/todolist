@@ -7,7 +7,7 @@ export const todolistsApi = {
   getTodolists() {
     return instance.get<Todolist[]>("todo-lists")
   },
-  updateTodolist(payload: { id: string, title: string }) {
+  updateTodolist(payload: { id: string; title: string }) {
     const { id, title } = payload
     return instance.put<Response>(`todo-lists/${id}`, { title })
   },
