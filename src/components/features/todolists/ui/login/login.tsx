@@ -1,18 +1,30 @@
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField } from "@mui/material"
 import { selectThemeMode } from "components/app/appSelectors"
-import { useAppSelector } from "components/common/hooks"
+import { useAppDispatch, useAppSelector } from "components/common/hooks"
 import { getTheme } from "components/common/theme"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 
 import s from './Login.module.css'
+import { loginTC } from "components/features/auth/model/auth-reducer"
+import { selectIsLoggedIn } from "components/features/auth/model/authSelector"
+import { Navigate, useNavigate } from "react-router"
+import { Path } from "components/common/routing/routing"
+import { useEffect } from "react"
 
-type Inputs = {
+export type Inputs = {
     email: string
     password: string
     rememberMe: boolean
 }
 
 export const Login = () => {
+
+    const dispatch = useAppDispatch()
+
+    const isLoggedIn = useAppSelector(selectIsLoggedIn)
+
+    const navigate = useNavigate()
+
     const themeMode = useAppSelector(selectThemeMode)
     const theme = getTheme(themeMode)
 
@@ -25,9 +37,17 @@ export const Login = () => {
     } = useForm<Inputs>({ defaultValues: { email: '', password: '', rememberMe: false } })
 
     const onSubmit: SubmitHandler<Inputs> = data => {
-        console.log(data)
-        reset();
+        dispatch(loginTC(data))
+        // reset();
     }
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate(Path.Main)
+        }
+    }, [isLoggedIn, navigate])
+
+
 
     return (
         <Grid container justifyContent={'center'}>

@@ -6,6 +6,8 @@ import MenuIcon from "@mui/icons-material/Menu"
 import { useAppDispatch } from "../../hooks/useAppDispatch"
 import { useAppSelector } from "../../hooks/useAppSelector"
 import { selectAppStatus, selectThemeMode } from "../../../app/appSelectors"
+import { logoutTC } from "components/features/auth/model/auth-reducer"
+import { selectIsLoggedIn } from "components/features/auth/model/authSelector"
 
 export const Header = () => {
   const themeMode = useAppSelector(selectThemeMode)
@@ -13,8 +15,14 @@ export const Header = () => {
 
   const dispatch = useAppDispatch()
 
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
+
   const changeModeHandler = () => {
     dispatch(changeThemeAC(themeMode === "light" ? "dark" : "light"))
+  }
+
+  const logoutHandler = () => {
+    dispatch(logoutTC())
   }
 
   return (
@@ -25,8 +33,7 @@ export const Header = () => {
             <MenuIcon />
           </IconButton>
           <Box>
-            <MenuButton>Login</MenuButton>
-            <MenuButton>Logout</MenuButton>
+            {isLoggedIn && <MenuButton onClick={logoutHandler}>Logout</MenuButton>}
             <MenuButton>Faq</MenuButton>
             <Switch color={"default"} onChange={changeModeHandler} />
           </Box>
