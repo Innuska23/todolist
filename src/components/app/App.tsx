@@ -40,7 +40,7 @@ function App() {
   if (!isInitialized) {
     return (
       <div className={s.circularProgressContainer}>
-        <CircularProgress size={150} thickness={3} />
+        <CircularProgress color="secondary" size={150} thickness={3} />
       </div>
     )
   }

@@ -10,3 +10,11 @@
   margin: 0;
   text-transform: uppercase;
 }
+
+.buttonContainer {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  text-transform: uppercase;
+  margin-top: 50px;
+}

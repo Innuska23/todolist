@@ -6,6 +6,7 @@ import { todolistsApi } from "../api/todolistsApi"
 import { RequestStatus, setAppStatusAC } from "components/app/app-reducer"
 import { ResultCode } from "components/common/enums"
 import { handleServerAppError, handleServerNetworkError } from "components/common/utils"
+import { fetchTasksTC } from "./tasks-reducer"
 
 export type DomainTodolist = Todolist & {
   filter: FilterValuesType
@@ -19,6 +20,7 @@ type ActionsType =
   | UpdateTodolistACType
   | SetTodolistsActionType
   | ChangeTodolistEntityStatusActionType
+  | ClearTodosDataACActionType
 
 const initialState: DomainTodolist[] = []
 
@@ -46,13 +48,16 @@ export const todoListReducer = (state: DomainTodolist[] = initialState, action: 
         filter.id === action.payload.id ? { ...filter, filter: action.payload.filter } : filter,
       )
     }
-    case "SET-TODOLISTS": {
+    case "SET_TODOLISTS": {
       return action.todolists.map((tl) => ({ ...tl, filter: "all", entityStatus: "idle" }))
     }
     case "CHANGE-TODOLIST-ENTITY-STATUS": {
       return state.map((tl) =>
         tl.id === action.payload.id ? { ...tl, entityStatus: action.payload.entityStatus } : tl,
       )
+    }
+    case "CLEAR_TODOS_DATA": {
+      return []
     }
     default:
       return state
@@ -65,6 +70,7 @@ export type UpdateTodolistACType = ReturnType<typeof updateTodolistAC>
 export type ChangeFilterACType = ReturnType<typeof changeFilterAC>
 export type SetTodolistsActionType = ReturnType<typeof setTodolistsAC>
 export type ChangeTodolistEntityStatusActionType = ReturnType<typeof changeTodolistEntityStatusAC>
+export type ClearTodosDataACActionType = ReturnType<typeof clearTodosDataAC>
 
 export const removeTodoAC = (id: string) => {
   return {
@@ -98,8 +104,14 @@ export const changeFilterAC = (payload: { id: string; filter: FilterValuesType }
 
 export const setTodolistsAC = (todolists: Todolist[]) => {
   return {
-    type: "SET-TODOLISTS",
+    type: "SET_TODOLISTS",
     todolists,
+  } as const
+}
+
+export const clearTodosDataAC = () => {
+  return {
+    type: "CLEAR_TODOS_DATA",
   } as const
 }
 
@@ -114,6 +126,11 @@ export const fetchTodolistsTC = () => (dispatch: AppDispatch) => {
     .then((res) => {
       dispatch(setAppStatusAC("succeeded"))
       dispatch(setTodolistsAC(res.data))
+      return res.data
+    }).then((todos) => {
+      todos.forEach((tl) => {
+        dispatch(fetchTasksTC(tl.id))
+      })
     })
     .catch((err) => {
       handleServerNetworkError(err, dispatch)

@@ -4,10 +4,9 @@ import { useAppDispatch, useAppSelector } from "components/common/hooks"
 import { getTheme } from "components/common/theme"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 
-import s from './Login.module.css'
 import { loginTC } from "components/features/auth/model/auth-reducer"
 import { selectIsLoggedIn } from "components/features/auth/model/authSelector"
-import { Navigate, useNavigate } from "react-router"
+import { useNavigate } from "react-router"
 import { Path } from "components/common/routing/routing"
 import { useEffect } from "react"
 
@@ -31,14 +30,12 @@ export const Login = () => {
     const {
         register,
         handleSubmit,
-        reset,
         control,
         formState: { errors },
     } = useForm<Inputs>({ defaultValues: { email: '', password: '', rememberMe: false } })
 
     const onSubmit: SubmitHandler<Inputs> = data => {
         dispatch(loginTC(data))
-        // reset();
     }
 
     useEffect(() => {
@@ -79,14 +76,30 @@ export const Login = () => {
                             <TextField
                                 label="Email"
                                 margin="normal"
+                                error={!!errors.email}
+                                helperText={errors.email?.message}
                                 {...register('email', {
                                     required: 'Email is required',
                                     pattern: {
                                         value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
                                         message: 'Incorrect email address',
                                     },
-                                })} />
-                            <TextField type="password" label="Password" margin="normal" {...register('password')} />
+                                })}
+                            />
+                            <TextField
+                                type="password"
+                                label="Password"
+                                margin="normal"
+                                error={!!errors.password}
+                                helperText={errors.password?.message}
+                                {...register('password', {
+                                    required: 'Password is required',
+                                    minLength: {
+                                        value: 3,
+                                        message: 'Password must be at least 3 characters long'
+                                    },
+                                })}
+                            />
                             <FormControlLabel
                                 label={'Remember me'}
                                 control={
@@ -98,14 +111,17 @@ export const Login = () => {
                                     />
                                 }
                             />
-                            <Button type={'submit'} variant={'contained'} color={'primary'}>
+                            <Button
+                                type={'submit'}
+                                variant={'contained'}
+                                color={'primary'}
+                            >
                                 Login
                             </Button>
-                            {errors.email && <span className={s.errorMessage}>{errors.email.message}</span>}
                         </FormGroup>
                     </form>
                 </FormControl>
             </Grid>
-        </Grid>
+        </Grid >
     )
 }

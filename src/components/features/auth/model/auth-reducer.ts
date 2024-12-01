@@ -1,10 +1,11 @@
 import { Dispatch } from 'redux';
 import { setAppStatusAC } from "components/app/app-reducer"
 import { AppDispatch } from "components/app/store"
-import { Inputs } from "components/features/todolists/ui/login/login"
+import { Inputs } from "components/features/auth/ui/login/login"
 import { authApi } from "../api/authApi"
 import { ResultCode } from "components/common/enums"
 import { handleServerAppError, handleServerNetworkError } from "components/common/utils"
+import { clearTodosDataAC } from 'components/features/todolists/model/todolists-reducer';
 
 type InitialStateType = typeof initialState
 
@@ -35,8 +36,9 @@ const setIsInitializedAC = (isInitialized: boolean) => {
     return { type: 'SET_IS_INITIALIZED', payload: { isInitialized } } as const
 }
 
-type ActionsType = ReturnType<typeof setIsLoggedInAC> |
-    ReturnType<typeof setIsInitializedAC>
+type ActionsType = ReturnType<typeof setIsLoggedInAC>
+    | ReturnType<typeof setIsInitializedAC>
+    | ReturnType<typeof clearTodosDataAC>
 
 export const loginTC = (data: Inputs) => (dispatch: AppDispatch) => {
     dispatch(setAppStatusAC('loading'));
@@ -66,6 +68,7 @@ export const logoutTC = () => (dispatch: AppDispatch) => {
                 dispatch(setAppStatusAC('succeeded'));
                 dispatch(setIsLoggedInAC(false))
                 localStorage.removeItem('sn-token')
+                dispatch(clearTodosDataAC())
             } else {
                 handleServerAppError(res.data, dispatch);
             }

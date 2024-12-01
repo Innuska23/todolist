@@ -1,4 +1,4 @@
-import { AddTodolistActionType, RemoveTodoACType } from "./todolists-reducer"
+import { AddTodolistActionType, ClearTodosDataACActionType, RemoveTodoACType } from "./todolists-reducer"
 import { tasksApi } from "../api/tasksApi"
 import { AppDispatch, RootState } from "components/app/store"
 import { ResultCode, TaskStatus } from "components/common/enums"
@@ -24,7 +24,8 @@ type ActionsType =
   | RemoveTodoACType
   | SetTasksACType
   | SetTaskLoadingActionType
-// | UpdateTaskNewAC
+  // | UpdateTaskNewAC
+  | ClearTodosDataACActionType
 
 export type TasksStateType = {
   [key: string]: Array<DomainTaskUi>
@@ -96,6 +97,9 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
         ...state,
         [todolistId]: state[todolistId].map((task) => (task.id === taskId ? { ...task, isLoading } : task)),
       }
+    }
+    case "CLEAR_TODOS_DATA": {
+      return {}
     }
     default:
       return state
@@ -199,65 +203,65 @@ export const addTaskTC = (arg: { title: string; todolistId: string }) => (dispat
 
 export const updateTaskTC =
   (arg: { todolistId: string; taskId: string; updates: Partial<DomainTask> }) =>
-  (dispatch: AppDispatch, getState: () => RootState) => {
-    const { taskId, todolistId, updates } = arg
+    (dispatch: AppDispatch, getState: () => RootState) => {
+      const { taskId, todolistId, updates } = arg
 
-    const allTasksFromState = getState().tasks
-    const tasksForCurrentTodolist = allTasksFromState[todolistId]
+      const allTasksFromState = getState().tasks
+      const tasksForCurrentTodolist = allTasksFromState[todolistId]
 
-    if (!tasksForCurrentTodolist) {
-      console.error(`No tasks found for todolistId: ${todolistId}`)
-      return
-    }
+      if (!tasksForCurrentTodolist) {
+        console.error(`No tasks found for todolistId: ${todolistId}`)
+        return
+      }
 
-    const task = tasksForCurrentTodolist.find((t) => t.id === taskId)
+      const task = tasksForCurrentTodolist.find((t) => t.id === taskId)
 
-    if (!task) {
-      console.error(`Task with id: ${taskId} not found`)
-      return
-    }
+      if (!task) {
+        console.error(`Task with id: ${taskId} not found`)
+        return
+      }
 
-    dispatch(setAppStatusAC("loading"))
-    dispatch(setTaskLoadingAC({ taskId, todolistId, isLoading: true }))
-    const updatedTask = { ...task, ...updates }
+      dispatch(setAppStatusAC("loading"))
+      dispatch(setTaskLoadingAC({ taskId, todolistId, isLoading: true }))
+      const updatedTask = { ...task, ...updates }
 
-    tasksApi
-      .changeTaskStatus({ taskId, todolistId, model: updatedTask })
-      .then((res) => {
-        if (res.data.resultCode === ResultCode.Success) {
-          dispatch(setAppStatusAC("succeeded"))
-          dispatch(updateTaskAC({ todolistId, taskId, updates }))
+      tasksApi
+        .changeTaskStatus({ taskId, todolistId, model: updatedTask })
+        .then((res) => {
+          if (res.data.resultCode === ResultCode.Success) {
+            dispatch(setAppStatusAC("succeeded"))
+            dispatch(updateTaskAC({ todolistId, taskId, updates }))
+            dispatch(setTaskLoadingAC({ taskId, todolistId, isLoading: false }))
+          } else {
+            handleServerAppError(res.data, dispatch)
+          }
+        })
+        .catch((err) => {
+          handleServerNetworkError(err, dispatch)
           dispatch(setTaskLoadingAC({ taskId, todolistId, isLoading: false }))
-        } else {
-          handleServerAppError(res.data, dispatch)
-        }
-      })
-      .catch((err) => {
-        handleServerNetworkError(err, dispatch)
-        dispatch(setTaskLoadingAC({ taskId, todolistId, isLoading: false }))
-      })
-  }
+        })
+    }
 
 export const changeTaskStatusTC =
   (arg: { taskId: string; status: TaskStatus; todolistId: string }) =>
-  (dispatch: AppDispatch, getState: () => RootState) => {
-    dispatch(
-      updateTaskTC({
-        todolistId: arg.todolistId,
-        taskId: arg.taskId,
-        updates: { status: arg.status },
-      }),
-    )
-  }
+    (dispatch: AppDispatch, getState: () => RootState) => {
+      dispatch(
+        updateTaskTC({
+          todolistId: arg.todolistId,
+          taskId: arg.taskId,
+          updates: { status: arg.status },
+        }),
+      )
+    }
 
 export const updateTaskTitleTC =
   (arg: { todolistId: string; taskId: string; title: string }) =>
-  (dispatch: AppDispatch, getState: () => RootState) => {
-    dispatch(
-      updateTaskTC({
-        todolistId: arg.todolistId,
-        taskId: arg.taskId,
-        updates: { title: arg.title },
-      }),
-    )
-  }
+    (dispatch: AppDispatch, getState: () => RootState) => {
+      dispatch(
+        updateTaskTC({
+          todolistId: arg.todolistId,
+          taskId: arg.taskId,
+          updates: { title: arg.title },
+        }),
+      )
+    }

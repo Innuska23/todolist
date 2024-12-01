@@ -1,6 +1,6 @@
 import { instance } from "components/common/instance";
 import { Response } from "components/common/types";
-import { Inputs } from "components/features/todolists/ui/login/login";
+import { Inputs } from "components/features/auth/ui/login/login";
 
 export const authApi = {
     login(payload: Inputs) {

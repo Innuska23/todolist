@@ -1,5 +1,5 @@
 import { Main } from "components/app/Main"
-import { Login } from "components/features/todolists/ui/login/login"
+import { Login } from "components/features/auth/ui/login/login"
 import { Route, Routes } from "react-router"
 import { Page404 } from "../components/Page404/Page404"
 

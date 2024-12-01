@@ -2,9 +2,6 @@ import { Box, List, Typography } from "@mui/material"
 import { Task } from "./Task/Task"
 import { useAppSelector } from "../../../../../../common/hooks/useAppSelector"
 import { selectTask } from "../../../../model/tasksSelectors"
-import { useEffect } from "react"
-import { fetchTasksTC } from "components/features/todolists/model/tasks-reducer"
-import { useAppDispatch } from "components/common/hooks"
 import { TaskStatus } from "components/common/enums"
 import { DomainTodolist } from "components/features/todolists/model/todolists-reducer"
 
@@ -13,11 +10,6 @@ type TasksType = {
 }
 
 export const Tasks = ({ todolist }: TasksType) => {
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    dispatch(fetchTasksTC(todolist.id))
-  }, [dispatch, todolist.id])
 
   const tasks = useAppSelector(selectTask)
 
