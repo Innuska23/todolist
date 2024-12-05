@@ -3,7 +3,7 @@ import { Task } from "./Task/Task"
 import { useAppSelector } from "../../../../../../common/hooks/useAppSelector"
 import { selectTask } from "../../../../model/tasksSelectors"
 import { TaskStatus } from "components/common/enums"
-import { DomainTodolist } from "components/features/todolists/model/todolists-reducer"
+import { DomainTodolist } from "components/features/todolists/model/todolistsSlice"
 
 type TasksType = {
   todolist: DomainTodolist

@@ -1,4 +1,4 @@
-import { changeThemeAC } from "../../../app/app-reducer"
+import { changeTheme } from "../../../app/appSlice"
 import { AppBar, Box, IconButton, LinearProgress, Switch, Toolbar } from "@mui/material"
 import { MenuButton } from "./menuButton/MenuButton"
 import MenuIcon from "@mui/icons-material/Menu"
@@ -6,7 +6,7 @@ import MenuIcon from "@mui/icons-material/Menu"
 import { useAppDispatch } from "../../hooks/useAppDispatch"
 import { useAppSelector } from "../../hooks/useAppSelector"
 import { selectAppStatus, selectThemeMode } from "../../../app/appSelectors"
-import { logoutTC } from "components/features/auth/model/auth-reducer"
+import { logoutTC } from "components/features/auth/model/authSlice"
 import { selectIsLoggedIn } from "components/features/auth/model/authSelector"
 
 export const Header = () => {
@@ -18,7 +18,7 @@ export const Header = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
   const changeModeHandler = () => {
-    dispatch(changeThemeAC(themeMode === "light" ? "dark" : "light"))
+    dispatch(changeTheme({ themeMode: themeMode === "light" ? "dark" : "light" }))
   }
 
   const logoutHandler = () => {

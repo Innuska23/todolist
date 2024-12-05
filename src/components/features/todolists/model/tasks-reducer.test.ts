@@ -1,7 +1,7 @@
 import { DomainTask } from "./../api/tasksApi.types"
 import { v1 } from "uuid"
-import { addTaskAC, removeTaskAC, tasksReducer, TasksStateType, updateTaskAC } from "./tasks-reducer"
-import { addTodolistAC, removeTodoAC } from "./todolists-reducer"
+import { addTaskAC, removeTaskAC, tasksReducer, TasksStateType, updateTaskAC } from "./tasksSlice"
+import { addTodolist, removeTodolist } from "./todolistsSlice"
 import { TaskPriority, TaskStatus } from "components/common/enums"
 
 let todolistId1: string
@@ -223,11 +223,13 @@ test("title of specified task should be changed", () => {
 })
 
 test("new array should be added when new todolist is added", () => {
-  const action = addTodolistAC({
-    id: "new-id",
-    title: "new todolist",
-    addedDate: "",
-    order: 1,
+  const action = addTodolist({
+    todolist: {
+      id: "new-id",
+      title: "new todolist",
+      addedDate: "",
+      order: 1,
+    }
   })
 
   const endState = tasksReducer(startState, action)
@@ -244,7 +246,7 @@ test("new array should be added when new todolist is added", () => {
 })
 
 test("property with todolistId should be deleted", () => {
-  const action = removeTodoAC(todolistId2)
+  const action = removeTodolist({ id: todolistId2 })
 
   const endState = tasksReducer(startState, action)
 

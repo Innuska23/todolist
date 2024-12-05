@@ -2,7 +2,7 @@ import { Box, Button } from "@mui/material"
 import { FilterValuesType, TodolistType } from "../../../../../../app/App"
 
 import { filterButtonsContainerSx } from "./FilterTasksButtons.styles"
-import { changeFilterAC } from "../../../../model/todolists-reducer"
+import { changeFilter } from "../../../../model/todolistsSlice"
 
 import { useAppDispatch } from "../../../../../../common/hooks/useAppDispatch"
 
@@ -16,7 +16,7 @@ export const FilterTasksButtons = ({ todolist }: FilterTasksButtonsType) => {
   const { filter, id } = todolist
 
   const changeFilterTasksHandler = (filter: FilterValuesType) => {
-    dispatch(changeFilterAC({ filter, id }))
+    dispatch(changeFilter({ filter, id }))
   }
 
   return (

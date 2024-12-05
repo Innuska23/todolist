@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "components/common/hooks"
 import { getTheme } from "components/common/theme"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 
-import { loginTC } from "components/features/auth/model/auth-reducer"
+import { loginTC } from "components/features/auth/model/authSlice"
 import { selectIsLoggedIn } from "components/features/auth/model/authSelector"
 import { useNavigate } from "react-router"
 import { Path } from "components/common/routing/routing"

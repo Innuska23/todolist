@@ -1,4 +1,4 @@
-import { ThemeMode } from "../../app/app-reducer"
+import { ThemeMode } from "../../app/appSlice"
 
 import { createTheme } from "@mui/material/styles"
 import { deepPurple } from "@mui/material/colors"

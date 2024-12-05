@@ -7,11 +7,11 @@ import "./App.css"
 import { useAppSelector } from "../common/hooks/useAppSelector"
 import { selectThemeMode } from "./appSelectors"
 import { ErrorSnackbar } from "../common/components/ErrorSnackbar/ErrorSnackbar"
-import { RequestStatus } from "./app-reducer"
+import { RequestStatus } from "./appSlice"
 import { Routing } from "components/common/routing/routing"
 import { useAppDispatch } from "components/common/hooks"
 import { useEffect } from "react"
-import { initializeAppTC } from "components/features/auth/model/auth-reducer"
+import { initializeAppTC } from "components/features/auth/model/authSlice"
 import { CircularProgress } from "@mui/material"
 
 import s from './App.module.css'

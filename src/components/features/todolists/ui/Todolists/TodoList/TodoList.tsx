@@ -3,9 +3,9 @@ import { Box } from "@mui/material"
 import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons"
 import { Tasks } from "./Tasks/Tasks"
 import { TodolistTitle } from "./TodolistTitle/TodolistTitle"
-import { addTaskTC } from "../../../model/tasks-reducer"
+import { addTaskTC } from "../../../model/tasksSlice"
 import { useAppDispatch } from "../../../../../common/hooks/useAppDispatch"
-import { DomainTodolist } from "components/features/todolists/model/todolists-reducer"
+import { DomainTodolist } from "components/features/todolists/model/todolistsSlice"
 
 type TodoListPropsType = {
   todolist: DomainTodolist
