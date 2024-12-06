@@ -1,5 +1,6 @@
-import { AddItemForm } from "../../../../../common/components/AddItemForm/AddItemForm"
 import { Box } from "@mui/material"
+
+import { AddItemForm } from "../../../../../common/components/AddItemForm/AddItemForm"
 import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons"
 import { Tasks } from "./Tasks/Tasks"
 import { TodolistTitle } from "./TodolistTitle/TodolistTitle"

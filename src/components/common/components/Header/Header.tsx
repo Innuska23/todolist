@@ -1,13 +1,11 @@
-import { changeTheme } from "../../../app/appSlice"
-import { AppBar, Box, IconButton, LinearProgress, Switch, Toolbar } from "@mui/material"
-import { MenuButton } from "./menuButton/MenuButton"
 import MenuIcon from "@mui/icons-material/Menu"
+import { AppBar, Box, IconButton, LinearProgress, Switch, Toolbar } from "@mui/material"
 
+import { changeTheme, selectAppStatus, selectThemeMode } from "../../../app/appSlice"
+import { MenuButton } from "./menuButton/MenuButton"
 import { useAppDispatch } from "../../hooks/useAppDispatch"
 import { useAppSelector } from "../../hooks/useAppSelector"
-import { selectAppStatus, selectThemeMode } from "../../../app/appSelectors"
-import { logoutTC } from "components/features/auth/model/authSlice"
-import { selectIsLoggedIn } from "components/features/auth/model/authSelector"
+import { logoutTC, selectIsLoggedIn } from "components/features/auth/model/authSlice"
 
 export const Header = () => {
   const themeMode = useAppSelector(selectThemeMode)

@@ -1,10 +1,9 @@
 import { ChangeEvent } from "react"
 import { Box, Checkbox, IconButton, ListItem } from "@mui/material"
+import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded"
 
 import { EditableSpan } from "../../../../../../../common/components/EditableSpan/EditableSpan"
-import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded"
 import { changeTaskStatusTC, removeTaskTC, updateTaskTitleTC } from "../../../../../model/tasksSlice"
-
 import { formAddedContainerSx, taskTextSx } from "./Task.styles"
 import { useAppDispatch } from "../../../../../../../common/hooks/useAppDispatch"
 import { DomainTaskUi } from "components/features/todolists/api/tasksApi.types"

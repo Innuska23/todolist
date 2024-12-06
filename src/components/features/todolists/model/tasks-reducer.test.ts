@@ -1,6 +1,7 @@
-import { DomainTask } from "./../api/tasksApi.types"
 import { v1 } from "uuid"
-import { addTaskAC, removeTaskAC, tasksReducer, TasksStateType, updateTaskAC } from "./tasksSlice"
+
+import { DomainTask } from "./../api/tasksApi.types"
+import { addTask, removeTask, tasksReducer, TasksStateType, updateTask } from "./tasksSlice"
 import { addTodolist, removeTodolist } from "./todolistsSlice"
 import { TaskPriority, TaskStatus } from "components/common/enums"
 
@@ -99,7 +100,7 @@ beforeEach(() => {
 })
 
 test("correct task should be deleted from correct array", () => {
-  const endState = tasksReducer(startState, removeTaskAC({ taskId: "2", todolistId: todolistId2 }))
+  const endState = tasksReducer(startState, removeTask({ taskId: "2", todolistId: todolistId2 }))
 
   expect(endState).toEqual({
     [todolistId1]: [
@@ -114,6 +115,7 @@ test("correct task should be deleted from correct array", () => {
         priority: TaskPriority.Low,
         startDate: "",
         todoListId: todolistId1,
+        isLoading: false,
       },
       {
         id: "2",
@@ -126,6 +128,7 @@ test("correct task should be deleted from correct array", () => {
         priority: TaskPriority.Low,
         startDate: "",
         todoListId: todolistId1,
+        isLoading: false,
       },
       {
         id: "3",
@@ -138,6 +141,7 @@ test("correct task should be deleted from correct array", () => {
         priority: TaskPriority.Low,
         startDate: "",
         todoListId: todolistId1,
+        isLoading: false,
       },
     ],
     [todolistId2]: [
@@ -152,6 +156,7 @@ test("correct task should be deleted from correct array", () => {
         priority: TaskPriority.Low,
         startDate: "",
         todoListId: todolistId2,
+        isLoading: false,
       },
       {
         id: "3",
@@ -164,6 +169,7 @@ test("correct task should be deleted from correct array", () => {
         priority: TaskPriority.Low,
         startDate: "",
         todoListId: todolistId2,
+        isLoading: false,
       },
     ],
   })
@@ -172,7 +178,7 @@ test("correct task should be deleted from correct array", () => {
 test("correct task should be added to correct array", () => {
   const newTask: DomainTask = {
     id: v1(),
-    title: "juce",
+    title: "juice",
     status: TaskStatus.New,
     addedDate: "",
     deadline: "",
@@ -183,21 +189,21 @@ test("correct task should be added to correct array", () => {
     todoListId: todolistId2,
   }
 
-  const endState = tasksReducer(startState, addTaskAC({ task: newTask }))
+  const endState = tasksReducer(startState, addTask({ todolistId: todolistId2, task: newTask }))
 
   expect(endState[todolistId1].length).toBe(3)
   expect(endState[todolistId2].length).toBe(4)
   expect(endState[todolistId2][0].id).toBeDefined()
-  expect(endState[todolistId2][0].title).toBe("juce")
+  expect(endState[todolistId2][0].title).toBe("juice")
   expect(endState[todolistId2][0].status).toBe(TaskStatus.New)
 })
 
 test("status of specified task should be changed", () => {
   const endState = tasksReducer(
     startState,
-    updateTaskAC({
+    updateTask({
       taskId: "2",
-      updates: { status: TaskStatus.InProgress },
+      model: { status: TaskStatus.InProgress },
       todolistId: todolistId2,
     }),
   )
@@ -211,9 +217,9 @@ test("status of specified task should be changed", () => {
 test("title of specified task should be changed", () => {
   const endState = tasksReducer(
     startState,
-    updateTaskAC({
+    updateTask({
       taskId: "2",
-      updates: { title: "water" },
+      model: { title: "water" },
       todolistId: todolistId2,
     }),
   )
@@ -229,7 +235,7 @@ test("new array should be added when new todolist is added", () => {
       title: "new todolist",
       addedDate: "",
       order: 1,
-    }
+    },
   })
 
   const endState = tasksReducer(startState, action)
@@ -253,6 +259,5 @@ test("property with todolistId should be deleted", () => {
   const keys = Object.keys(endState)
 
   expect(keys.length).toBe(1)
-  expect(endState["todolistId2"]).not.toBeDefined()
-  expect(endState["todolistId2"]).toBeUndefined()
+  expect(endState[todolistId2]).toBeUndefined()
 })

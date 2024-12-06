@@ -1,19 +1,18 @@
 import { Box, List, Typography } from "@mui/material"
 import { Task } from "./Task/Task"
 import { useAppSelector } from "../../../../../../common/hooks/useAppSelector"
-import { selectTask } from "../../../../model/tasksSelectors"
 import { TaskStatus } from "components/common/enums"
 import { DomainTodolist } from "components/features/todolists/model/todolistsSlice"
+import { selectTask } from "components/features/todolists/model/tasksSlice"
 
 type TasksType = {
   todolist: DomainTodolist
 }
 
 export const Tasks = ({ todolist }: TasksType) => {
-
   const tasks = useAppSelector(selectTask)
 
-  const allTodolistTasks = tasks[todolist.id]
+  const allTodolistTasks = tasks[todolist.id] || []
 
   let tasksForTodolist = allTodolistTasks
 

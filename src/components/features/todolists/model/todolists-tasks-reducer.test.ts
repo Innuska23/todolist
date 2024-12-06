@@ -11,7 +11,7 @@ test("ids should be equals", () => {
       title: "new todolist",
       addedDate: "",
       id: "new-id",
-    }
+    },
   })
 
   const endTasksState = tasksReducer(startTasksState, action)

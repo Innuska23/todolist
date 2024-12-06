@@ -1,9 +1,10 @@
 import { SyntheticEvent } from "react"
+
 import Alert from "@mui/material/Alert"
 import Snackbar from "@mui/material/Snackbar"
+
 import { useAppDispatch, useAppSelector } from "components/common/hooks"
-import { errorAppStatus } from "components/app/appSelectors"
-import { setAppError } from "components/app/appSlice"
+import { errorAppStatus, setAppError } from "components/app/appSlice"
 
 export const ErrorSnackbar = () => {
   const error = useAppSelector(errorAppStatus)

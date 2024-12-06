@@ -1,7 +1,7 @@
-import { ThemeMode } from "../../app/appSlice"
-
 import { createTheme } from "@mui/material/styles"
 import { deepPurple } from "@mui/material/colors"
+
+import { ThemeMode } from "../../app/appSlice"
 
 export const getTheme = (themeMode: ThemeMode) => {
   return createTheme({

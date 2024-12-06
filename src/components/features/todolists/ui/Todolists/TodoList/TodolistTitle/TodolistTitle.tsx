@@ -4,7 +4,6 @@ import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded"
 import { EditableSpan } from "../../../../../../common/components/EditableSpan/EditableSpan"
 import { DomainTodolist, removeTodolistTC, updateTodolistTitleTC } from "../../../../model/todolistsSlice"
 import { todolistContainer } from "./TodolistTitle.styles"
-
 import { useAppDispatch } from "../../../../../../common/hooks/useAppDispatch"
 
 type TodolistTitleProps = {

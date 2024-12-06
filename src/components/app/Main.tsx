@@ -1,14 +1,16 @@
+import { useEffect } from "react"
+import { useNavigate } from "react-router"
+
 import { Box, Container } from "@mui/material"
 import Grid from "@mui/material/Grid2"
+
 import { AddItemForm } from "../common/components/AddItemForm/AddItemForm"
 import { Todolists } from "../features/todolists/ui/Todolists/Todolists"
 import { addTodolistTC } from "../features/todolists/model/todolistsSlice"
 import { useAppDispatch } from "../common/hooks/useAppDispatch"
-import { useNavigate } from "react-router"
-import { selectIsLoggedIn } from "components/features/auth/model/authSelector"
 import { useAppSelector } from "components/common/hooks"
-import { useEffect } from "react"
 import { Path } from "components/common/routing/routing"
+import { selectIsLoggedIn } from "components/features/auth/model/authSlice"
 
 export const Main = () => {
   const dispatch = useAppDispatch()

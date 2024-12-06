@@ -1,21 +1,20 @@
+import { useEffect } from "react"
+
 import { ThemeProvider } from "@mui/material/styles"
 import CssBaseline from "@mui/material/CssBaseline"
-import { getTheme } from "../common/theme/theme"
-import { Header } from "../common/components/Header/Header"
-
-import "./App.css"
-import { useAppSelector } from "../common/hooks/useAppSelector"
-import { selectThemeMode } from "./appSelectors"
-import { ErrorSnackbar } from "../common/components/ErrorSnackbar/ErrorSnackbar"
-import { RequestStatus } from "./appSlice"
-import { Routing } from "components/common/routing/routing"
-import { useAppDispatch } from "components/common/hooks"
-import { useEffect } from "react"
-import { initializeAppTC } from "components/features/auth/model/authSlice"
 import { CircularProgress } from "@mui/material"
 
-import s from './App.module.css'
-import { selectIsInitialized } from "components/features/auth/model/authSelector"
+import { getTheme } from "../common/theme/theme"
+import { Header } from "../common/components/Header/Header"
+import { useAppSelector } from "../common/hooks/useAppSelector"
+import { ErrorSnackbar } from "../common/components/ErrorSnackbar/ErrorSnackbar"
+import { RequestStatus, selectThemeMode } from "./appSlice"
+import { Routing } from "components/common/routing/routing"
+import { useAppDispatch } from "components/common/hooks"
+import { initializeAppTC, selectIsInitialized } from "components/features/auth/model/authSlice"
+
+import "./App.css"
+import s from "./App.module.css"
 
 export type FilterValuesType = "all" | "active" | "completed"
 

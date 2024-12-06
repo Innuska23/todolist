@@ -38,7 +38,7 @@ test("correct todolist should be added", () => {
         addedDate: "",
         order: 1,
         title: "New Todolist",
-      }
+      },
     }),
   )
 
