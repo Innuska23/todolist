@@ -8,6 +8,7 @@ import { authApi } from "../api/authApi"
 import { ResultCode } from "components/common/enums"
 import { handleServerAppError, handleServerNetworkError } from "components/common/utils"
 import { clearTodosData } from "components/features/todolists/model/todolistsSlice"
+import { clearTasksData } from "components/features/todolists/model/tasksSlice"
 
 export const authSlice = createSlice({
   name: "auth",
@@ -25,7 +26,7 @@ export const authSlice = createSlice({
   }),
   selectors: {
     selectIsLoggedIn: (state) => state.isLoggedIn,
-    selectIsInitialized: (state) => state.isLoggedIn,
+    selectIsInitialized: (state) => state.isInitialized,
   },
 })
 
@@ -61,6 +62,7 @@ export const logoutTC = () => (dispatch: AppDispatch) => {
         dispatch(setIsLoggedIn({ isLoggedIn: false }))
         localStorage.removeItem("sn-token")
         dispatch(clearTodosData())
+        dispatch(clearTasksData())
       } else {
         handleServerAppError(res.data, dispatch)
       }
