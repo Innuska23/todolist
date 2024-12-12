@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import { AppDispatch } from "../../../app/store"
 import { FilterValuesType } from "../../../app/App"
 import { Todolist } from "../api/todolistsApi.types"
-import { todolistsApi } from "../api/todolistsApi"
+import { _todolistsApi } from "../api/todolistsApi"
 import { RequestStatus, setAppStatus } from "components/app/appSlice"
 import { ResultCode } from "components/common/enums"
 import { handleServerAppError, handleServerNetworkError } from "components/common/utils"
@@ -75,7 +75,7 @@ export const changeTodolistEntityStatusAC = (payload: { id: string; entityStatus
 
 export const fetchTodolistsTC = () => (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
-  todolistsApi
+  _todolistsApi
     .getTodolists()
     .then((res) => {
       dispatch(setAppStatus({ status: "succeeded" }))
@@ -94,7 +94,7 @@ export const fetchTodolistsTC = () => (dispatch: AppDispatch) => {
 
 export const addTodolistTC = (title: string) => (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
-  todolistsApi
+  _todolistsApi
     .createTodolist(title)
     .then((res) => {
       if (res.data.resultCode === ResultCode.Success) {
@@ -112,7 +112,7 @@ export const addTodolistTC = (title: string) => (dispatch: AppDispatch) => {
 export const removeTodolistTC = (id: string) => (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
   dispatch(changeTodolistEntityStatusAC({ id, entityStatus: "loading" }))
-  todolistsApi
+  _todolistsApi
     .removeTodolist(id)
     .then((res) => {
       if (res.data.resultCode === ResultCode.Success) {
@@ -131,7 +131,7 @@ export const removeTodolistTC = (id: string) => (dispatch: AppDispatch) => {
 
 export const updateTodolistTitleTC = (arg: { id: string; title: string }) => (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
-  todolistsApi
+  _todolistsApi
     .updateTodolist(arg)
     .then((res) => {
       if (res.data.resultCode === ResultCode.Success) {

@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 import { ThemeProvider } from "@mui/material/styles"
 import CssBaseline from "@mui/material/CssBaseline"
@@ -8,13 +8,14 @@ import { getTheme } from "../common/theme/theme"
 import { Header } from "../common/components/Header/Header"
 import { useAppSelector } from "../common/hooks/useAppSelector"
 import { ErrorSnackbar } from "../common/components/ErrorSnackbar/ErrorSnackbar"
-import { RequestStatus, selectThemeMode } from "./appSlice"
+import { RequestStatus, selectThemeMode, setIsLoggedIn } from "./appSlice"
 import { Routing } from "components/common/routing/routing"
 import { useAppDispatch } from "components/common/hooks"
-import { initializeAppTC, selectIsInitialized } from "components/features/auth/model/authSlice"
 
 import "./App.css"
 import s from "./App.module.css"
+import { useMeQuery } from "components/features/auth/api/authApi"
+import { ResultCode } from "components/common/enums"
 
 export type FilterValuesType = "all" | "active" | "completed"
 
@@ -26,15 +27,21 @@ export type TodolistType = {
 }
 
 function App() {
+  const [isInitialized, setIsInitialized] = useState(false)
   const themeMode = useAppSelector(selectThemeMode)
+
+  const { data, isLoading } = useMeQuery()
 
   const dispatch = useAppDispatch()
 
-  const isInitialized = useAppSelector(selectIsInitialized)
-
   useEffect(() => {
-    dispatch(initializeAppTC())
-  }, [dispatch])
+    if (!isLoading) {
+      setIsInitialized(true)
+      if (data?.resultCode === ResultCode.Success) {
+        dispatch(setIsLoggedIn({ isLoggedIn: true }))
+      }
+    }
+  }, [isLoading, data, dispatch])
 
   if (!isInitialized) {
     return (

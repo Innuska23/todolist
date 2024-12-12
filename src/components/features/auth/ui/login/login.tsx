@@ -5,20 +5,17 @@ import { useEffect } from "react"
 
 import { useAppDispatch, useAppSelector } from "components/common/hooks"
 import { getTheme } from "components/common/theme"
-import { loginTC, selectIsLoggedIn } from "components/features/auth/model/authSlice"
 import { Path } from "components/common/routing/routing"
-import { selectThemeMode } from "components/app/appSlice"
-
-export type Inputs = {
-  email: string
-  password: string
-  rememberMe: boolean
-}
+import { selectIsLoggedIn, selectThemeMode, setIsLoggedIn } from "components/app/appSlice"
+import { useLoginMutation } from "../../api/authApi"
+import { LoginArgs } from "../../api/authApi.types"
+import { ResultCode } from "components/common/enums"
 
 export const Login = () => {
   const dispatch = useAppDispatch()
 
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
+  const [login] = useLoginMutation()
 
   const navigate = useNavigate()
 
@@ -29,11 +26,21 @@ export const Login = () => {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
-  } = useForm<Inputs>({ defaultValues: { email: "", password: "", rememberMe: false } })
+  } = useForm<LoginArgs>({ defaultValues: { email: "", password: "", rememberMe: false } })
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    dispatch(loginTC(data))
+  const onSubmit: SubmitHandler<LoginArgs> = (data) => {
+    login(data)
+      .then((res) => {
+        if (res.data?.resultCode === ResultCode.Success) {
+          dispatch(setIsLoggedIn({ isLoggedIn: true }))
+          localStorage.setItem("sn-token", res.data.data.token)
+        }
+      })
+      .finally(() => {
+        reset()
+      })
   }
 
   useEffect(() => {

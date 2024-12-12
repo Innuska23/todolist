@@ -1,9 +1,37 @@
 import { instance } from "components/common/instance"
 import { Response } from "components/common/types"
-import { Inputs } from "components/features/auth/ui/login/login"
+import { baseApi } from "components/features/todolists/api/baseApi";
+import { LoginArgs } from "./authApi.types";
 
-export const authApi = {
-  login(payload: Inputs) {
+export const authApi = baseApi.injectEndpoints({
+  endpoints: build => ({
+    me: build.query<Response<{ id: number; email: string; login: string }>, void>({
+      query: () => 'auth/me',
+    }),
+    login: build.mutation<Response<{ userId: number; token: string }>, LoginArgs>({
+      query: payload => {
+        return {
+          method: 'POST',
+          url: 'auth/login',
+          body: payload,
+        }
+      },
+    }),
+    logout: build.mutation<Response, void>({
+      query: () => {
+        return {
+          method: 'DELETE',
+          url: 'auth/login',
+        }
+      },
+    }),
+  }),
+})
+
+export const { useLoginMutation, useMeQuery, useLogoutMutation } = authApi
+
+export const _authApi = {
+  login(payload: LoginArgs) {
     return instance.post<Response<{ userId: number; token: string }>>(`auth/login`, payload)
   },
   logout() {

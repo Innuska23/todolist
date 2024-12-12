@@ -4,6 +4,7 @@ import { FilterValuesType, TodolistType } from "../../../../../../app/App"
 import { filterButtonsContainerSx } from "./FilterTasksButtons.styles"
 import { changeFilter } from "../../../../model/todolistsSlice"
 import { useAppDispatch } from "../../../../../../common/hooks/useAppDispatch"
+import { todolistsApi } from "components/features/todolists/api/todolistsApi"
 
 type FilterTasksButtonsType = {
   todolist: TodolistType
@@ -15,7 +16,14 @@ export const FilterTasksButtons = ({ todolist }: FilterTasksButtonsType) => {
   const { filter, id } = todolist
 
   const changeFilterTasksHandler = (filter: FilterValuesType) => {
-    dispatch(changeFilter({ filter, id }))
+    dispatch(
+      todolistsApi.util.updateQueryData("getTodolists", undefined, (state) => {
+        const index = state.findIndex((tl) => tl.id === id)
+        if (index !== -1) {
+          state[index].filter = filter
+        }
+      }),
+    )
   }
 
   return (
