@@ -8,6 +8,7 @@ import { useAppSelector } from "../../hooks/useAppSelector"
 import { useLogoutMutation } from "components/features/auth/api/authApi"
 import { ResultCode } from "components/common/enums"
 import { baseApi } from "components/features/todolists/api/baseApi"
+import { clearData } from "components/common/actions/clearData"
 
 export const Header = () => {
   const themeMode = useAppSelector(selectThemeMode)
@@ -28,6 +29,7 @@ export const Header = () => {
       .then((res) => {
         if (res.data?.resultCode === ResultCode.Success) {
           dispatch(setIsLoggedIn({ isLoggedIn: false }))
+          dispatch(clearData())
           localStorage.removeItem("sn-token")
         }
       })

@@ -8,6 +8,7 @@ import { RequestStatus, setAppStatus } from "components/app/appSlice"
 import { ResultCode } from "components/common/enums"
 import { handleServerAppError, handleServerNetworkError } from "components/common/utils"
 import { fetchTasksTC } from "./tasksSlice"
+import { clearData } from "components/common/actions/clearData"
 
 export type DomainTodolist = Todolist & {
   filter: FilterValuesType
@@ -57,10 +58,12 @@ export const todoListSlice = createSlice({
         entityStatus: "idle",
       }))
     }),
-    clearTodosData: create.reducer((state, action) => {
-      return []
-    }),
   }),
+  extraReducers(builder) {
+    builder.addCase(clearData, (state) => {
+      return [];
+    });
+  },
   selectors: {
     selectTodolists: (state): DomainTodolist[] => state,
   },
@@ -152,6 +155,5 @@ export const {
   addTodolist,
   changeFilter,
   changeTodolistEntityStatus,
-  clearTodosData,
   setTodolists,
 } = todoListSlice.actions

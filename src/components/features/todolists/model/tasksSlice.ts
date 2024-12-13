@@ -7,6 +7,7 @@ import { setAppStatus } from "components/app/appSlice"
 import { handleServerAppError, handleServerNetworkError } from "components/common/utils"
 import { DomainTask, DomainTaskUi } from "../api/tasksApi.types"
 import { addTodolist, removeTodolist } from "./todolistsSlice"
+import { clearData } from "components/common/actions/clearData"
 
 export type TasksStateType = {
   [key: string]: Array<DomainTaskUi>
@@ -44,9 +45,6 @@ export const tasksSlice = createSlice({
         }
       },
     ),
-    clearTasksData: create.reducer(() => {
-      return {}
-    }),
   }),
   extraReducers: (builder) => {
     builder
@@ -56,13 +54,16 @@ export const tasksSlice = createSlice({
       .addCase(removeTodolist, (state, action) => {
         delete state[action.payload.id]
       })
+      .addCase(clearData, (state) => {
+        return {};
+      });
   },
   selectors: {
     selectTask: (state) => state,
   },
 })
 
-export const { setTasks, removeTask, addTask, updateTask, clearTasksData } = tasksSlice.actions
+export const { setTasks, removeTask, addTask, updateTask } = tasksSlice.actions
 
 export const tasksReducer = tasksSlice.reducer
 
@@ -114,41 +115,41 @@ export const addTaskTC = (arg: { title: string; todolistId: string }) => (dispat
 
 export const updateTaskTC =
   (arg: { todolistId: string; taskId: string; updates: Partial<DomainTask> }) =>
-  (dispatch: AppDispatch, getState: () => RootState) => {
-    const { taskId, todolistId, updates } = arg
+    (dispatch: AppDispatch, getState: () => RootState) => {
+      const { taskId, todolistId, updates } = arg
 
-    const allTasksFromState = getState().tasks
-    const tasksForCurrentTodolist = allTasksFromState[todolistId]
+      const allTasksFromState = getState().tasks
+      const tasksForCurrentTodolist = allTasksFromState[todolistId]
 
-    if (!tasksForCurrentTodolist) {
-      console.error(`No tasks found for todolistId: ${todolistId}`)
-      return
+      if (!tasksForCurrentTodolist) {
+        console.error(`No tasks found for todolistId: ${todolistId}`)
+        return
+      }
+
+      const task = tasksForCurrentTodolist.find((t) => t.id === taskId)
+
+      if (!task) {
+        console.error(`Task with id: ${taskId} not found`)
+        return
+      }
+
+      dispatch(setAppStatus({ status: "loading" }))
+      const updatedTask = { ...task, ...updates }
+
+      tasksApi
+        .changeTaskStatus({ taskId, todolistId, model: updatedTask })
+        .then((res) => {
+          if (res.data.resultCode === ResultCode.Success) {
+            dispatch(setAppStatus({ status: "succeeded" }))
+            dispatch(updateTask({ todolistId, taskId, model: updates }))
+          } else {
+            handleServerAppError(res.data, dispatch)
+          }
+        })
+        .catch((err) => {
+          handleServerNetworkError(err, dispatch)
+        })
     }
-
-    const task = tasksForCurrentTodolist.find((t) => t.id === taskId)
-
-    if (!task) {
-      console.error(`Task with id: ${taskId} not found`)
-      return
-    }
-
-    dispatch(setAppStatus({ status: "loading" }))
-    const updatedTask = { ...task, ...updates }
-
-    tasksApi
-      .changeTaskStatus({ taskId, todolistId, model: updatedTask })
-      .then((res) => {
-        if (res.data.resultCode === ResultCode.Success) {
-          dispatch(setAppStatus({ status: "succeeded" }))
-          dispatch(updateTask({ todolistId, taskId, model: updates }))
-        } else {
-          handleServerAppError(res.data, dispatch)
-        }
-      })
-      .catch((err) => {
-        handleServerNetworkError(err, dispatch)
-      })
-  }
 
 export const changeTaskStatusTC =
   (arg: { taskId: string; status: TaskStatus; todolistId: string }) => (dispatch: AppDispatch) => {
