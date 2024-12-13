@@ -1,10 +1,38 @@
 import { instance } from "../../../common/instance/instance"
+import { baseApi } from "./baseApi"
 
-import { GetTaskResponse, DomainTask, UpdateTaskModel } from "./tasksApi.types"
+import { GetTaskResponse, DomainTask, UpdateTaskModel, DomainTaskUi } from "./tasksApi.types"
 
 import { Response } from "components/common/types"
 
-export const tasksApi = {
+export const tasksApi = baseApi.injectEndpoints({
+  endpoints: build => ({
+    getTasks: build.query<DomainTaskUi[], string>({
+      query: (todolistId) => `todo-lists/${todolistId}/tasks`,
+      transformResponse(response: GetTaskResponse): DomainTaskUi[] {
+        return response?.items.map(task => ({
+          ...task,
+          isLoading: false
+        }))
+      },
+      providesTags: ['Task'],
+    }),
+    createTask: build.mutation<Response<{ item: DomainTask }>, { todolistId: string, title: string }>({
+      query: ({ todolistId, title }) => {
+        return {
+          url: `todo-lists/${todolistId}/tasks`,
+          method: "POST",
+          body: { title }
+        }
+      },
+      invalidatesTags: ['Task']
+    })
+  })
+})
+
+export const { useGetTasksQuery, useCreateTaskMutation } = tasksApi
+
+export const _tasksApi = {
   getTasks(todolistId: string) {
     return instance.get<GetTaskResponse>(`todo-lists/${todolistId}/tasks`)
   },

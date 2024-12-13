@@ -1,27 +1,24 @@
 import { Box, List, Typography } from "@mui/material"
 import { Task } from "./Task/Task"
-import { useAppSelector } from "../../../../../../common/hooks/useAppSelector"
 import { TaskStatus } from "components/common/enums"
 import { DomainTodolist } from "components/features/todolists/model/todolistsSlice"
-import { selectTask } from "components/features/todolists/model/tasksSlice"
+import { useGetTasksQuery } from "components/features/todolists/api/tasksApi"
 
 type TasksType = {
   todolist: DomainTodolist
 }
 
 export const Tasks = ({ todolist }: TasksType) => {
-  const tasks = useAppSelector(selectTask)
+  const { data: tasks } = useGetTasksQuery(todolist.id)
 
-  const allTodolistTasks = tasks[todolist.id] || []
-
-  let tasksForTodolist = allTodolistTasks
+  let tasksForTodolist = tasks
 
   if (todolist.filter === "active") {
-    tasksForTodolist = allTodolistTasks.filter((task) => task.status === TaskStatus.New)
+    tasksForTodolist = tasksForTodolist?.filter((task) => task.status === TaskStatus.New)
   }
 
   if (todolist.filter === "completed") {
-    tasksForTodolist = allTodolistTasks.filter((task) => task.status === TaskStatus.Completed)
+    tasksForTodolist = tasksForTodolist?.filter((task) => task.status === TaskStatus.Completed)
   }
 
   return (

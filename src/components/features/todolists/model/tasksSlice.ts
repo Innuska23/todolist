@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-import { tasksApi } from "../api/tasksApi"
+import { _tasksApi } from "../api/tasksApi"
 import { AppDispatch, RootState } from "components/app/store"
 import { ResultCode, TaskStatus } from "components/common/enums"
 import { setAppStatus } from "components/app/appSlice"
@@ -71,7 +71,7 @@ export const { selectTask } = tasksSlice.selectors
 
 export const fetchTasksTC = (todolistId: string) => (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
-  tasksApi.getTasks(todolistId).then((res) => {
+  _tasksApi.getTasks(todolistId).then((res) => {
     dispatch(setAppStatus({ status: "succeeded" }))
     const tasks = res.data.items
     dispatch(setTasks({ todolistId, tasks }))
@@ -81,7 +81,7 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: AppDispatch) => {
 export const removeTaskTC = (args: { taskId: string; todolistId: string }) => (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
 
-  tasksApi
+  _tasksApi
     .removeTask(args)
     .then((res) => {
       if (res.data.resultCode === ResultCode.Success) {
@@ -98,7 +98,7 @@ export const removeTaskTC = (args: { taskId: string; todolistId: string }) => (d
 
 export const addTaskTC = (arg: { title: string; todolistId: string }) => (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
-  tasksApi
+  _tasksApi
     .createTask(arg)
     .then((res) => {
       if (res.data.resultCode === ResultCode.Success) {
@@ -136,7 +136,7 @@ export const updateTaskTC =
       dispatch(setAppStatus({ status: "loading" }))
       const updatedTask = { ...task, ...updates }
 
-      tasksApi
+      _tasksApi
         .changeTaskStatus({ taskId, todolistId, model: updatedTask })
         .then((res) => {
           if (res.data.resultCode === ResultCode.Success) {
