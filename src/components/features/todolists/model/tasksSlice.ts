@@ -7,7 +7,6 @@ import { setAppStatus } from "components/app/appSlice"
 import { handleServerAppError, handleServerNetworkError } from "components/common/utils"
 import { DomainTask, DomainTaskUi } from "../api/tasksApi.types"
 import { addTodolist, removeTodolist } from "./todolistsSlice"
-import { clearData } from "components/common/actions/clearData"
 
 export type TasksStateType = {
   [key: string]: Array<DomainTaskUi>
@@ -54,9 +53,6 @@ export const tasksSlice = createSlice({
       .addCase(removeTodolist, (state, action) => {
         delete state[action.payload.id]
       })
-      .addCase(clearData, (state) => {
-        return {};
-      });
   },
   selectors: {
     selectTask: (state) => state,

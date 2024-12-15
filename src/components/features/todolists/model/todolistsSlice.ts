@@ -8,7 +8,7 @@ import { RequestStatus, setAppStatus } from "components/app/appSlice"
 import { ResultCode } from "components/common/enums"
 import { handleServerAppError, handleServerNetworkError } from "components/common/utils"
 import { fetchTasksTC } from "./tasksSlice"
-import { clearData } from "components/common/actions/clearData"
+// import { clearData } from "components/common/actions/clearData"
 
 export type DomainTodolist = Todolist & {
   filter: FilterValuesType
@@ -59,11 +59,6 @@ export const todoListSlice = createSlice({
       }))
     }),
   }),
-  extraReducers(builder) {
-    builder.addCase(clearData, (state) => {
-      return [];
-    });
-  },
   selectors: {
     selectTodolists: (state): DomainTodolist[] => state,
   },

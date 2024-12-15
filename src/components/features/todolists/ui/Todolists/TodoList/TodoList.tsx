@@ -15,7 +15,6 @@ export const TodoList = ({ todolist }: TodoListPropsType) => {
   const [createTask] = useCreateTaskMutation()
 
   const addTaskHandler = (title: string) => {
-    debugger
     createTask({ title, todolistId: todolist.id })
   }
 
