@@ -44,3 +44,12 @@ export const getTheme = (themeMode: ThemeMode) => {
     },
   })
 }
+
+
+export const saveThemeToLocalStorage = (themeMode: ThemeMode) => {
+  localStorage.setItem("themeMode", themeMode);
+};
+
+export const loadThemeFromLocalStorage = () => {
+  return localStorage.getItem("themeMode") || "light";
+};

@@ -4,11 +4,11 @@ import { ThemeProvider } from "@mui/material/styles"
 import CssBaseline from "@mui/material/CssBaseline"
 import { CircularProgress } from "@mui/material"
 
-import { getTheme } from "../common/theme/theme"
+import { getTheme, loadThemeFromLocalStorage, saveThemeToLocalStorage } from "../common/theme/theme"
 import { Header } from "../common/components/Header/Header"
 import { useAppSelector } from "../common/hooks/useAppSelector"
 import { ErrorSnackbar } from "../common/components/ErrorSnackbar/ErrorSnackbar"
-import { RequestStatus, selectThemeMode, setIsLoggedIn } from "./appSlice"
+import { RequestStatus, selectThemeMode, setIsLoggedIn, ThemeMode } from "./appSlice"
 import { Routing } from "components/common/routing/routing"
 import { useAppDispatch } from "components/common/hooks"
 
@@ -28,8 +28,12 @@ export type TodolistType = {
 
 function App() {
   const [isInitialized, setIsInitialized] = useState(false)
-  const themeMode = useAppSelector(selectThemeMode)
+  const [themeMode, setThemeMode] = useState<ThemeMode>(loadThemeFromLocalStorage() as ThemeMode)
+  useEffect(() => {
+    saveThemeToLocalStorage(themeMode)
+  }, [themeMode])
 
+  const theme = useAppSelector(selectThemeMode)
   const { data, isLoading } = useMeQuery()
 
   const dispatch = useAppDispatch()
@@ -52,9 +56,9 @@ function App() {
   }
 
   return (
-    <ThemeProvider theme={getTheme(themeMode)}>
+    <ThemeProvider theme={getTheme(theme)}>
       <CssBaseline />
-      <Header />
+      <Header themeMode={themeMode} setThemeMode={setThemeMode} />
       <Routing />
       <ErrorSnackbar />
     </ThemeProvider>

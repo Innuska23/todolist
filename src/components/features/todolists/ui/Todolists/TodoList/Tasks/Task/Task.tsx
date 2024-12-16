@@ -61,7 +61,7 @@ export const Task = ({ task, todolist }: TaskProps) => {
   const isDisabled = todolist.entityStatus === "loading" || task.isLoading
 
   return (
-    <ListItem sx={formAddedContainerSx}>
+    <ListItem sx={formAddedContainerSx} >
       <Box sx={taskTextSx(task.status === TaskStatus.Completed)}>
         <Checkbox
           checked={task.status === TaskStatus.Completed}
