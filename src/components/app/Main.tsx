@@ -40,7 +40,7 @@ export const Main = () => {
         <AddItemForm addItem={addNewTodoList} />
       </Box>
 
-      <Grid container spacing={4}>
+      <Grid container spacing={5}>
         <Todolists />
       </Grid>
     </Container>
