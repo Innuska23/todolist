@@ -7,10 +7,7 @@ import { formAddedContainerSx, taskTextSx } from "./Task.styles"
 import { DomainTaskUi, UpdateTaskModel } from "components/features/todolists/api/tasksApi.types"
 import { TaskStatus } from "components/common/enums"
 import { DomainTodolist } from "components/features/todolists/model/todolistsSlice"
-import {
-  useRemoveTaskMutation,
-  useUpdateTaskMutation,
-} from "components/features/todolists/api/tasksApi"
+import { useRemoveTaskMutation, useUpdateTaskMutation } from "components/features/todolists/api/tasksApi"
 
 type TaskProps = {
   task: DomainTaskUi
@@ -61,14 +58,14 @@ export const Task = ({ task, todolist }: TaskProps) => {
   const isDisabled = todolist.entityStatus === "loading" || task.isLoading
 
   return (
-    <ListItem sx={formAddedContainerSx} >
+    <ListItem sx={formAddedContainerSx}>
       <Box sx={taskTextSx(task.status === TaskStatus.Completed)}>
         <Checkbox
           checked={task.status === TaskStatus.Completed}
           onChange={changeTaskStatusHandler}
           disabled={isDisabled}
         />
-        <EditableSpan value={task.title} onChange={changeTaskTitleHandler} disabled={isDisabled} />
+        <EditableSpan value={task.title} onChange={changeTaskTitleHandler} disabled={!!isDisabled} />
       </Box>
       <IconButton onClick={removeTaskHandler} disabled={isDisabled}>
         <DeleteOutlineRoundedIcon />

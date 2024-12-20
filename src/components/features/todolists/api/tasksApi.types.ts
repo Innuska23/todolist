@@ -14,13 +14,13 @@ export type DomainTask = {
 }
 
 export type DomainTaskUi = DomainTask & {
-  isLoading: boolean
+  isLoading?: boolean
 }
 
 export type GetTaskResponse = {
   totalCount: number
   error: string
-  items: DomainTask[]
+  items: DomainTaskUi[]
 }
 
 export type UpdateTaskModel = {
