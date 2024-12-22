@@ -17,15 +17,6 @@ import s from "./App.module.css"
 import { useMeQuery } from "components/features/auth/api/authApi"
 import { ResultCode } from "components/common/enums"
 
-export type FilterValuesType = "all" | "active" | "completed"
-
-export type TodolistType = {
-  id: string
-  title: string
-  filter: FilterValuesType
-  entityStatus: RequestStatus
-}
-
 function App() {
   const [isInitialized, setIsInitialized] = useState(false)
   const [themeMode, setThemeMode] = useState<ThemeMode>(loadThemeFromLocalStorage() as ThemeMode)

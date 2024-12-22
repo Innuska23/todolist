@@ -16,7 +16,7 @@ export const TodolistSkeleton = () => {
       </div>
 
       <>
-        {Array(4)
+        {Array(10)
           .fill(null)
           .map((_, id) => (
             <div key={id} className={s.common}>

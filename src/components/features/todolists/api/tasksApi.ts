@@ -4,7 +4,7 @@ import { baseApi } from "./baseApi"
 import { GetTaskResponse, DomainTask, UpdateTaskModel } from "./tasksApi.types"
 import { Response } from "components/common/types"
 
-export const PAGE_SIZE = 4
+export const PAGE_SIZE = 10
 
 export const tasksApi = baseApi.injectEndpoints({
   endpoints: (build) => ({

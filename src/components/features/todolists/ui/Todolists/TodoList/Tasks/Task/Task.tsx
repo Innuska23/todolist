@@ -6,8 +6,8 @@ import { EditableSpan } from "../../../../../../../common/components/EditableSpa
 import { formAddedContainerSx, taskTextSx } from "./Task.styles"
 import { DomainTaskUi, UpdateTaskModel } from "components/features/todolists/api/tasksApi.types"
 import { TaskStatus } from "components/common/enums"
-import { DomainTodolist } from "components/features/todolists/model/todolistsSlice"
 import { useRemoveTaskMutation, useUpdateTaskMutation } from "components/features/todolists/api/tasksApi"
+import { DomainTodolist } from "components/features/todolists/lib/types/types"
 
 type TaskProps = {
   task: DomainTaskUi

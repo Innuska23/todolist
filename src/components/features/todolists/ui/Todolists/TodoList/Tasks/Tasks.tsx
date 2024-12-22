@@ -1,11 +1,11 @@
 import { Box, List, Typography } from "@mui/material"
 import { Task } from "./Task/Task"
 import { TaskStatus } from "components/common/enums"
-import { DomainTodolist } from "components/features/todolists/model/todolistsSlice"
 import { useGetTasksQuery } from "components/features/todolists/api/tasksApi"
 import { TasksSkeleton } from "../../../skeletons/TasksSkeleton/TasksSkeleton"
 import { TasksPagination } from "../TasksPagination/TasksPagination"
 import { useState } from "react"
+import { DomainTodolist } from "components/features/todolists/lib/types/types"
 
 type TasksType = {
   todolist: DomainTodolist

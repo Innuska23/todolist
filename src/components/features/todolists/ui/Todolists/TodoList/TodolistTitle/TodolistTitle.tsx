@@ -2,7 +2,6 @@ import { Box, IconButton } from "@mui/material"
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded"
 
 import { EditableSpan } from "../../../../../../common/components/EditableSpan/EditableSpan"
-import { DomainTodolist } from "../../../../model/todolistsSlice"
 import { todolistContainer } from "./TodolistTitle.styles"
 import {
   todolistsApi,
@@ -11,6 +10,7 @@ import {
 } from "components/features/todolists/api/todolistsApi"
 import { RequestStatus } from "components/app/appSlice"
 import { useAppDispatch } from "components/common/hooks"
+import { DomainTodolist } from "components/features/todolists/lib/types/types"
 
 type TodolistTitleProps = {
   todolist: DomainTodolist
