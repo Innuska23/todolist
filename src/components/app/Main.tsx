@@ -1,6 +1,5 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router"
-
 import { Box, Container } from "@mui/material"
 import Grid from "@mui/material/Grid2"
 

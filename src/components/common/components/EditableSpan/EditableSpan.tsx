@@ -1,6 +1,7 @@
-import React, { ChangeEvent, useState } from "react"
-
+import React from "react"
 import { TextField } from "@mui/material"
+
+import { useEditableField } from "components/common/hooks/useEditableField"
 
 type EditableSpanPropsType = {
   value: string
@@ -10,44 +11,33 @@ type EditableSpanPropsType = {
 }
 
 export const EditableSpan: React.FC<EditableSpanPropsType> = ({ value, className, onChange, disabled }) => {
-  const [edit, setEdit] = useState(false)
-  const [newTitle, setNewTitle] = useState(value)
-  const [error, setError] = useState(false)
+  const {
+    isEditing,
+    value: currentValue,
+    error,
+    handleEdit,
+    handleChange,
+  } = useEditableField({
+    initialValue: value,
+    onSave: onChange,
+    disabled,
+  })
 
-  const editHandler = () => {
-    if (disabled) return
-    if (edit) {
-      if (newTitle.trim() !== "") {
-        onChange(newTitle)
-        setError(false)
-      } else {
-        setError(true)
-        return
-      }
-    }
-    setEdit(!edit)
-  }
-
-  const changeTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setNewTitle(event.currentTarget.value)
-    setError(false)
-  }
-
-  return edit ? (
+  return isEditing ? (
     <TextField
       variant="outlined"
-      value={newTitle}
+      value={currentValue}
       size="small"
       autoFocus
-      onBlur={editHandler}
-      onChange={changeTitleHandler}
+      onBlur={handleEdit}
+      onChange={handleChange}
       error={error}
       helperText={error ? "Title is required" : ""}
       sx={{ mb: 1 }}
       disabled={disabled}
     />
   ) : (
-    <span className={className} onDoubleClick={!disabled ? editHandler : undefined}>
+    <span className={className} onDoubleClick={!disabled ? handleEdit : undefined}>
       {value}
     </span>
   )
