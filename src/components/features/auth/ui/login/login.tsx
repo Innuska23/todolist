@@ -6,9 +6,10 @@ import { Path } from "components/common/routing/routing"
 import { useLogin } from "../../lib/hooks/useLogin"
 import { LoginFormLabel } from "./LoginFormLabel/LoginFormLabel "
 import { LoginForm } from "./LoginForm/LoginForm"
+import { container, formControl, formWrapper } from "./Login.styles"
 
 export const Login = () => {
-  const { isLoggedIn} = useLogin()
+  const { isLoggedIn } = useLogin()
 
   const navigate = useNavigate()
 
@@ -19,9 +20,9 @@ export const Login = () => {
   }, [isLoggedIn, navigate])
 
   return (
-    <Grid container justifyContent={"center"}>
-      <Grid item justifyContent={"center"}>
-        <FormControl>
+    <Grid container sx={container}>
+      <Grid item sx={formWrapper}>
+        <FormControl sx={formControl}>
           <LoginFormLabel />
           <LoginForm />
         </FormControl>

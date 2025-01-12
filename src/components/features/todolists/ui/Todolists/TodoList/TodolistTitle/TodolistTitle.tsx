@@ -2,7 +2,7 @@ import { Box, IconButton } from "@mui/material"
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded"
 
 import { EditableSpan } from "../../../../../../common/components/EditableSpan/EditableSpan"
-import { todolistContainer } from "./TodolistTitle.styles"
+import { titleContainerSx } from "./TodolistTitle.styles"
 import {
   todolistsApi,
   useRemoveTodolistMutation,
@@ -49,7 +49,7 @@ export const TodolistTitle = ({ todolist }: TodolistTitleProps) => {
   }
 
   return (
-    <Box className={"todolist-title-container"} sx={todolistContainer}>
+    <Box className={"todolist-title-container"} sx={titleContainerSx}>
       <h3>
         <EditableSpan value={title} onChange={updateTodolistHandler} disabled={entityStatus === "loading"} />
       </h3>
