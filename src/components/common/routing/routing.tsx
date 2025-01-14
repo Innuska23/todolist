@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router"
 
 import { Main } from "components/app/Main"
 import { Page404 } from "../components/Page404/Page404"
-import { Login } from "components/features/auth/ui/login/Login"
+import { Login } from "../../features/auth/ui/login/Login"
 
 export const Path = {
   Main: "/",
