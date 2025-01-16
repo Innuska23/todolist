@@ -1,7 +1,7 @@
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded"
 import { Box, IconButton, TextField } from "@mui/material"
 
-import { useAddItemForm } from "components/common/hooks/useAddItemForm"
+import { useAddItemForm } from "../../hooks/useAddItemForm"
 
 import { addItemFormSx } from "./AddItemForm.styles"
 

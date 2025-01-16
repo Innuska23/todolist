@@ -1,6 +1,6 @@
 import { FormLabel } from "@mui/material"
 
-import { useLogin } from "components/features/auth/lib/hooks/useLogin"
+import { useLogin } from "../../../../../features/auth/lib/hooks/useLogin"
 
 export const LoginFormLabel = () => {
   const { theme } = useLogin()

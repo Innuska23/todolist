@@ -2,7 +2,7 @@ import { instance } from "../../../common/instance/instance"
 import { baseApi } from "./baseApi"
 
 import { GetTaskResponse, DomainTask, UpdateTaskModel } from "./tasksApi.types"
-import { Response } from "components/common/types"
+import { Response } from "../../../common/types"
 
 export const PAGE_SIZE = 10
 

@@ -2,7 +2,7 @@ import { useState } from "react"
 
 import { DomainTodolist } from "../types/types"
 import { useGetTasksQuery } from "../../api/tasksApi"
-import { TaskStatus } from "components/common/enums"
+import { TaskStatus } from "../../../../common/enums"
 
 export const useTasks = (todolist: DomainTodolist) => {
     const { filter, id } = todolist
@@ -21,5 +21,5 @@ export const useTasks = (todolist: DomainTodolist) => {
         tasks = tasks?.filter(task => task.status === TaskStatus.Completed)
     }
 
-    return { tasks, isLoading, page, setPage, totalCount: data?.totalCount || 0}
+    return { tasks, isLoading, page, setPage, totalCount: data?.totalCount || 0 }
 }

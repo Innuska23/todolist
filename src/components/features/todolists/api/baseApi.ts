@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
-import { handleError } from "components/common/utils/handleError"
+import { handleError } from "../../../common/utils/handleError"
 
 export const baseApi = createApi({
     reducerPath: 'todolistsApi',

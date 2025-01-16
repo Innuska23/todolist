@@ -5,9 +5,9 @@ import Grid from "@mui/material/Grid2"
 
 import { AddItemForm } from "../common/components/AddItemForm/AddItemForm"
 import { Todolists } from "../features/todolists/ui/Todolists/Todolists"
-import { useAppSelector } from "components/common/hooks"
-import { Path } from "components/common/routing/routing"
-import { useAddTodolistMutation } from "components/features/todolists/api/todolistsApi"
+import { useAppSelector } from "../common/hooks"
+import { Path } from "../common/routing/routing"
+import { useAddTodolistMutation } from "../features/todolists/api/todolistsApi"
 import { selectIsLoggedIn } from "./appSlice"
 
 export const Main = () => {

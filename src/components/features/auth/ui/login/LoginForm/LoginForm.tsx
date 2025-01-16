@@ -1,7 +1,7 @@
 import { Button, Checkbox, FormControlLabel, FormGroup, TextField } from "@mui/material"
 import { Controller } from "react-hook-form"
 
-import { useLogin } from "components/features/auth/lib/hooks/useLogin"
+import { useLogin } from "../../../../../features/auth/lib/hooks/useLogin"
 
 export const LoginForm = () => {
   const { handleSubmit, onSubmit, register, errors, control } = useLogin()

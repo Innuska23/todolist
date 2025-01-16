@@ -1,7 +1,7 @@
 import { Button } from "@mui/material"
 import { Link } from "react-router"
 
-import { Path } from "components/common/routing/routing"
+import { Path } from "../../../common/routing/routing"
 
 import s from "./Page404.module.css"
 

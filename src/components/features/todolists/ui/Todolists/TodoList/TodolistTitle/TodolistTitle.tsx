@@ -7,10 +7,10 @@ import {
   todolistsApi,
   useRemoveTodolistMutation,
   useUpdateTodolistTitleMutation,
-} from "components/features/todolists/api/todolistsApi"
-import { RequestStatus } from "components/app/appSlice"
-import { useAppDispatch } from "components/common/hooks"
-import { DomainTodolist } from "components/features/todolists/lib/types/types"
+} from "../../../../../todolists/api/todolistsApi"
+import { RequestStatus } from "../../../../../../app/appSlice"
+import { useAppDispatch } from "../../../../../../common/hooks"
+import { DomainTodolist } from "../../../../../todolists/lib/types/types"
 
 type TodolistTitleProps = {
   todolist: DomainTodolist

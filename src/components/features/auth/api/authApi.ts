@@ -1,6 +1,6 @@
-import { instance } from "components/common/instance"
-import { Response } from "components/common/types"
-import { baseApi } from "components/features/todolists/api/baseApi";
+import { instance } from "../../../common/instance"
+import { Response } from "../../../common/types"
+import { baseApi } from "../../todolists/api/baseApi";
 import { LoginArgs } from "./authApi.types";
 
 export const authApi = baseApi.injectEndpoints({

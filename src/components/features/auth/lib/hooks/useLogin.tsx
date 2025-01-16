@@ -1,9 +1,9 @@
-import { selectIsLoggedIn, selectThemeMode, setIsLoggedIn } from "components/app/appSlice"
-import { ResultCode } from "components/common/enums"
-import { useAppDispatch, useAppSelector } from "components/common/hooks"
-import { getTheme } from "components/common/theme"
-import { useLoginMutation } from "components/features/auth/api/authApi"
-import { LoginArgs } from "components/features/auth/api/authApi.types"
+import { selectIsLoggedIn, selectThemeMode, setIsLoggedIn } from "../../../../app/appSlice"
+import { ResultCode } from "../../../../common/enums"
+import { useAppDispatch, useAppSelector } from "../../../../common/hooks"
+import { getTheme } from "../../../../common/theme"
+import { useLoginMutation } from "../../../../features/auth/api/authApi"
+import { LoginArgs } from "../../../../features/auth/api/authApi.types"
 import { SubmitHandler, useForm } from "react-hook-form"
 
 export const useLogin = () => {

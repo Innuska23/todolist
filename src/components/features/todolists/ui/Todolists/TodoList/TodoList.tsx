@@ -4,8 +4,8 @@ import { AddItemForm } from "../../../../../common/components/AddItemForm/AddIte
 import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons"
 import { Tasks } from "./Tasks/Tasks"
 import { TodolistTitle } from "./TodolistTitle/TodolistTitle"
-import { useCreateTaskMutation } from "components/features/todolists/api/tasksApi"
-import { DomainTodolist } from "components/features/todolists/lib/types/types"
+import { useCreateTaskMutation } from "../../../../todolists/api/tasksApi"
+import { DomainTodolist } from "../../../../todolists/lib/types/types"
 
 type TodoListPropsType = {
   todolist: DomainTodolist

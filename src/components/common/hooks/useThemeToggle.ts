@@ -1,6 +1,6 @@
-import { changeTheme, selectThemeMode } from "components/app/appSlice"
-import { useAppDispatch } from "./useAppDispatch"
-import { useAppSelector } from "./useAppSelector"
+import { changeTheme, selectThemeMode } from "../../app/appSlice"
+import { useAppDispatch } from "../hooks/useAppDispatch"
+import { useAppSelector } from "../hooks/useAppSelector"
 
 export const useThemeToggle = () => {
     const dispatch = useAppDispatch()

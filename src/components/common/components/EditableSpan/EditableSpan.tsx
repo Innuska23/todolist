@@ -1,7 +1,7 @@
 import React from "react"
 import { TextField } from "@mui/material"
 
-import { useEditableField } from "components/common/hooks/useEditableField"
+import { useEditableField } from "../../hooks/useEditableField"
 
 type EditableSpanPropsType = {
   value: string

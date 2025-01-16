@@ -1,6 +1,7 @@
 import Paper from "@mui/material/Paper"
-import s from "./TodolistSkeleton.module.css"
 import Skeleton from "@mui/material/Skeleton"
+
+import s from "./TodolistSkeleton.module.css"
 
 export const TodolistSkeleton = () => {
   return (

@@ -4,8 +4,8 @@ import { AppBar, Box, IconButton, LinearProgress, Switch, Toolbar } from "@mui/m
 import { selectAppStatus, selectIsLoggedIn, ThemeMode } from "../../../app/appSlice"
 import { MenuButton } from "./menuButton/MenuButton"
 import { useAppSelector } from "../../hooks/useAppSelector"
-import { useAuth } from "components/common/hooks/useAuth"
-import { useThemeToggle } from "components/common/hooks/useThemeToggle"
+import { useAuth } from "../../hooks/useAuth"
+import { useThemeToggle } from "../../hooks/useThemeToggle"
 
 type HeaderProps = {
   themeMode: ThemeMode

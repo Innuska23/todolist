@@ -2,8 +2,8 @@ import { Box, Button } from "@mui/material"
 
 import { filterButtonsContainerSx } from "./FilterTasksButtons.styles"
 import { useAppDispatch } from "../../../../../../common/hooks/useAppDispatch"
-import { todolistsApi } from "components/features/todolists/api/todolistsApi"
-import { FilterValues, TodolistType } from "components/features/todolists/lib/types/types"
+import { todolistsApi } from "../../../../api/todolistsApi"
+import { FilterValues, TodolistType } from "../../../../lib/types/types"
 
 type FilterTasksButtonsType = {
   todolist: TodolistType

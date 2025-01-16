@@ -1,4 +1,5 @@
 import Skeleton from "@mui/material/Skeleton"
+
 import s from "./TasksSkeleton.module.css"
 
 export const TasksSkeleton = () => {

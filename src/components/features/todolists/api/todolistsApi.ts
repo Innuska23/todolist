@@ -1,4 +1,4 @@
-import { Response } from "components/common/types"
+import { Response } from "../../../common/types"
 import { instance } from "../../../common/instance/instance"
 import { Todolist } from "./todolistsApi.types"
 import { baseApi } from "./baseApi"

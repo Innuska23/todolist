@@ -1,7 +1,7 @@
 import { createSlice, isFulfilled, isPending, isRejected } from "@reduxjs/toolkit"
-import { loadThemeFromLocalStorage, saveThemeToLocalStorage } from "components/common/theme"
-import { tasksApi } from "components/features/todolists/api/tasksApi"
-import { todolistsApi } from "components/features/todolists/api/todolistsApi"
+import { loadThemeFromLocalStorage, saveThemeToLocalStorage } from "../common/theme"
+import { tasksApi } from "../features/todolists/api/tasksApi"
+import { todolistsApi } from "../features/todolists/api/todolistsApi"
 
 export type ThemeMode = "dark" | "light"
 export type RequestStatus = "idle" | "loading" | "succeeded" | "failed"

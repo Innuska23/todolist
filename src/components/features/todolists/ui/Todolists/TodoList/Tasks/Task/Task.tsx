@@ -3,11 +3,11 @@ import { Box, Checkbox, IconButton, ListItem } from "@mui/material"
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded"
 
 import { EditableSpan } from "../../../../../../../common/components/EditableSpan/EditableSpan"
-import {formAddedContainerSx, taskTextSx } from "./Task.styles"
-import { DomainTaskUi, UpdateTaskModel } from "components/features/todolists/api/tasksApi.types"
+import { formAddedContainerSx, taskTextSx } from "./Task.styles"
+import { DomainTaskUi, UpdateTaskModel } from "../../../../../api/tasksApi.types"
 import { TaskStatus } from "components/common/enums"
-import { useRemoveTaskMutation, useUpdateTaskMutation } from "components/features/todolists/api/tasksApi"
-import { DomainTodolist } from "components/features/todolists/lib/types/types"
+import { useRemoveTaskMutation, useUpdateTaskMutation } from "../../../../../api/tasksApi"
+import { DomainTodolist } from "../../../../../lib/types/types"
 
 type TaskProps = {
   task: DomainTaskUi

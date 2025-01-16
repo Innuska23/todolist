@@ -3,15 +3,14 @@ import { Box, List, Typography } from "@mui/material"
 import { Task } from "./Task/Task"
 import { TasksSkeleton } from "../../../skeletons/TasksSkeleton/TasksSkeleton"
 import { TasksPagination } from "../TasksPagination/TasksPagination"
-import { DomainTodolist } from "components/features/todolists/lib/types/types"
-import { useTasks } from "components/features/todolists/lib/hooks/useTasks"
+import { DomainTodolist } from "../../../../../todolists/lib/types/types"
+import { useTasks } from "../../../../../todolists/lib/hooks/useTasks"
 
 type TasksType = {
   todolist: DomainTodolist
 }
 
 export const Tasks = ({ todolist }: TasksType) => {
-
   const { isLoading, page, setPage, tasks, totalCount } = useTasks(todolist)
 
   if (isLoading) {
