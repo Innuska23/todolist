@@ -18,18 +18,23 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Setup yarn
-        run: npm install -g yarn
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
-        run: yarn install
-
-      - name: Fix babel dependency
-        run: yarn add -D @babel/plugin-proposal-private-property-in-object
+        run: |
+          yarn install --frozen-lockfile
+          yarn add @craco/craco
+          yarn add -D @babel/plugin-proposal-private-property-in-object
 
       - name: Build the app
         run: yarn build
         env:
+          CI: false
           REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
           REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
 
